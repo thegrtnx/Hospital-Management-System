@@ -73,8 +73,8 @@
                   <input
                     type="text"
                     class="form-control"
-                    id="username"
-                    name="username"
+                    id="fname"
+                    name="fname"
                     placeholder="Please input your full name"
                     autofocus
                   />
@@ -90,7 +90,7 @@
                         <option id="catgy">I am a Doctor</option>
                         </option>
                     </select>
-                    <h6 style="font-size: 12px" class="text-danger mt-1" id="catsmsg"></h6>
+                   
                 </div>
 
                 <div class="mb-3 form-password-toggle">
@@ -98,7 +98,7 @@
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
-                      id="password"
+                      id="pword"
                       class="form-control"
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -112,7 +112,7 @@
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
-                      id="password"
+                      id="cpword"
                       class="form-control"
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -123,7 +123,7 @@
                 </div>
 
                 
-                <button class="btn btn-primary d-grid w-100">Sign up</button>
+                <button type="button" class="btn btn-primary d-grid w-100" id="sub">Sign up</button>
               </form>
 
               <p class="text-center">
@@ -158,15 +158,26 @@
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 
-    
-
-    <script>
-      // Display an info toast with no title
-    toastr.warning('Are you the 6 fingered man?')
-    </script>
-
     <!-- Page JS -->
-
+  <script>
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+  </script>
     
     <script src="ajax.js"></script>
   </body>

@@ -8,40 +8,26 @@ $(document).ready(function () {
   //signup
   $("#sub").click(function () {
     var fname = $("#fname").val();
-    var usname = $("#usname").val();
-    var catgy = $("#catgy").val();
     var email = $("#email").val();
+    var catgy = $("#catgy").val();
     var pword = $("#pword").val();
     var cpword = $("#cpword").val();
-    var nref = $("#ref").val();
-
-    if(nref == 'Others') {
-
-      var ref = $("#nref").val();
-      
-    } else {
-
-      var ref = $("#ref").val();
-    }
-
+    
 
     if (fname == "" || fname == null) {
-      $("#fmsg").html("Kindly input your full name.");
+      $(toastr.error("Please input your name"));
     } else {
-      if (usname == "" || usname == null) {
-        $("#usmsg").html("Please create a username");
-      } else {
         if (email == "" || email == null) {
-          $("#emmsg").html("Invalid email address");
+          $(toastr.error("Your email address can't be empty"));
         } else {
           if (pword == "" || pword == null) {
-            $("#pwmsg").html("Please create a secured password");
+            $(toastr.error("Please create a secured password"));
           } else {
             if (cpword == "" || cpword == null) {
-              $("#cpwmsg").html("Confirm your password");
+              $(toastr.error("Confirm your password"));
             } else {
               if (pword != cpword) {
-                $("#cpwmsg").html("Password does not match");
+                $(toastr.error("Password does not match"));
               } else {
                 $("#msg").html(
                   '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
@@ -52,16 +38,17 @@ $(document).ready(function () {
                   url: "functions/init.php",
                   data: {
                     fname: fname,
-                    usname: usname,
                     email: email,
                     pword: pword,
                     cpword: cpword,
-                    catgy,
-                    catgy,
-                    ref: ref,
+                    catgy, catgy,
                   },
+                  beforeSend: function() {
+                    $(toastr.clear());
+                    $("#sub").html("Submitting... Please wait");
+                 },
                   success: function (data) {
-                    $("#msg").html(data);
+                    $(toastr.success(data));
                   },
                 });
               }
@@ -69,7 +56,6 @@ $(document).ready(function () {
           }
         }
       }
-    }
   });
 
 
