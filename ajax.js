@@ -1,22 +1,8 @@
 $(document).ready(function () {
 
-  var pk = 'pk_live_7a2adba82cb1a1fc7bf752451c000e431d74bdc3';
+  //var pk = 'pk_live_7a2adba82cb1a1fc7bf752451c000e431d74bdc3';
 
-  //refral notice
-  $("#ref").change(function () {
-    
-    var ref = $("#ref").val();
 
-    if(ref == 'Others') {
-
-      $("#anref").show();
-
-    } else {
-
-      $("#anref").hide();
-    }
-
-  });
 
 
   //signup

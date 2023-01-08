@@ -36,7 +36,9 @@
     <link rel="stylesheet" href="assets/vendor/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="assets/css/demo.css" />
-
+    <link rel="stylesheet" href="assets/css/bootstrap-4.min.css" />
+    <link href="assets/css/toastr.css" rel="stylesheet"/>
+    
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
@@ -49,6 +51,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="assets/js/config.js"></script>
+    
   </head>
 
   <body>
@@ -142,6 +145,8 @@
     <!-- build:js assets/vendor/js/core.js -->
     <script src="assets/vendor/libs/jquery/jquery.js"></script>
     <script src="assets/vendor/libs/popper/popper.js"></script>
+    <script src="js/toastr.js"></script>
+    <script src="assets/js/toastr.min.js"></script>
     <script src="assets/vendor/js/bootstrap.js"></script>
     <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
@@ -153,9 +158,16 @@
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 
+    
+
+    <script>
+      // Display an info toast with no title
+    toastr.warning('Are you the 6 fingered man?')
+    </script>
+
     <!-- Page JS -->
 
-   
+    
     <script src="ajax.js"></script>
   </body>
 </html>
