@@ -1,5 +1,11 @@
 <?php
 
+//phpmailer classes
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+
                                         /*************helper functions***************/
 
 function clean($string) {
@@ -121,74 +127,6 @@ function email_exist($email) {
 
         return false;
     } 
-}
-
-
-//check if username exit
-function usname_exist($usname) {
-
-    $sql = "SELECT * FROM `users` WHERE `usname` = '$usname'";
-    $result = query($sql);
-
-    if(row_count($result) == 1) {
-
-        return true;
-
-    }else {
-
-        return false;
-    } 
-}
-
-
-//check if book exit
-function book_exist($booktitle) {
-
-    $sql = "SELECT * FROM books WHERE `book_title` = '$booktitle' OR `books_id` = '$booktitle' AND `book_status` <> 'deleted' OR `book_status` <> 'draft'";
-    $result = query($sql);
-
-    if(row_count($result) == 1) {
-
-        return true;
-
-    }else {
-
-        return false;
-    } 
-}
-
-
-//check if user has uploaded free book before
-function freebook_check($booktitle) {
-
-    $sql = "SELECT * FROM `books` WHERE `book_title` = '$booktitle' AND `book_status` = 'Show'";
-    $result = query($sql);
-    $row = mysqli_fetch_array($result);
-
-    //get the duration year
-    $myvalue = $row["duration"];
-
-    if($myvalue == '') {
-
-        return false;        
-
-    } else {
-        
-    $arr = explode(' ',trim($myvalue));
-    $new = $arr[2]; //  print current year
-
-    //get current year
-    $cyear = date('Y');
-
-    if(($row['duration'] != '') && ($new == $cyear)) {
-
-        return true;
-
-    } else {
-
-        return false;
-    } 
-}
 }
 
 
@@ -317,64 +255,6 @@ function role_director($username, $role) {
 }
 
 
-//get books details
-function book_details($data) {
-
-    $sql = "SELECT * FROM books WHERE `book_title` = '$data' OR `books_id` = '$data'";
-    $res = query($sql);
-    
-    if(row_count($res) == null || row_count($res) == '') {
-
-        redirect('./mybooks');
-        
-    } else {
-
-        $GLOBALS['editdraft'] = mysqli_fetch_array($res);
-
-        $myvalu = $GLOBALS['editdraft']['category_1'];
-
-        if($myvalu == '') {
-
-            $myvalue = 'NULL';
-            
-        } else {
-
-            $myvalue = $GLOBALS['editdraft']['category_1'];
-        }
-
-        $arr = explode(' - ',trim($myvalue));
-
-        if(!isset($arr[0])) {
-
-            $GLOBALS['cat1'] = 'NULL';
-        } else {
-
-        $GLOBALS['cat1'] = $arr[0]; // will print first value
-
-        }
-
-        if(!isset($arr[1])) {
-
-            $GLOBALS['cat2'] = 'NULL';
-        } else {
-
-        $GLOBALS['cat2'] = $arr[1]; // will print second value
-
-        }
-        
-        if(!isset($arr[2])) {
-
-            $GLOBALS['cat3'] = 'NULL';
-        } else {
-
-        $GLOBALS['cat3'] = $arr[2]; // will print third value
-
-        }
-        
-    }
-}
-
-
 
 //get specific user details
 function user_details() {
@@ -429,726 +309,121 @@ function user_details() {
 
 
 
-//check if book exist in wishlist
-function wishlist_exist($user, $bkid) {
-
-    $sql = "SELECT * FROM boughtbook WHERE `userid` = '$bkid' AND `reading` = 'wishlist' AND `bookid` = '$bkid'";
-    $result = query($sql);
-
-    if(row_count($result) == 1) {
-
-        return true;
-
-    }else {
-
-        return false;
-    } 
-}
-
-
-
-//get admin global data
-function retrieveadmindata() {
-
-    $sql = "SELECT * FROM `admin`";
-    $res = query($sql);
-    $GLOBALS['globaladm'] = mysqli_fetch_array($res);
-
-}
-
-
-//insert into transcation history function
-function insertintotransact($tref, $amt, $date, $user, $note, $paystat) {
-
-    $tsql="INSERT INTO t_his(`t_ref`, `amt`, `datepaid`, `username`, `sn`, `status`, `paynote`)";
-    $tsql.="VALUES('$tref', '$amt', '$date', '$user', '1', '$paystat', '$note')";
-    $tes = query($tsql);
-}
-
-
-//credit third party transaction history
-function thirdpartyroyal($tref, $royal, $date, $athmail, $royalnt) {
-
-    $sql="INSERT INTO royal(`t_ref`, `amt`, `datepaid`, `username`, `sn`, `status`, `paynote`)";
-    $sql.="VALUES('$tref', '$royal', '$date', '$athmail', '1', 'royal', '$royalnt')";
-    $tes = query($sql);
-}
-
-
-
-//insert into bookshelf function
-function insertbookshelforwishlist($bbid, $bkid, $user, $tref, $rdstat, $athmail, $price, $royal) {
-
-    $datepaid = date("Y-m-d h:i:sa");
-
-    $bskl="INSERT INTO boughtbook(`id`, `bbid`, `bookid`, `userid`, `tranid`, `reading`, `authormail`, `price`, `royalty`, `datepaid`)";
-    $bskl.="VALUES('1', '$bbid', '$bkid', '$user', '$tref', '$rdstat', '$athmail', '$price', '$royal', '$datepaid')";
-    $rkl = query($bskl);
-
-}
-
-
-//function get author
-function authordetails($athmail) {
-
-    $sql = "SELECT * FROM `users` WHERE `email` = '$athmail'";
-    $res = query($sql);
-
-    $GLOBALS['athdata'] = mysqli_fetch_array($res);
-}
-
-
-//update user wallet
-function updateuserwallet($user, $newbal) {
-
-    $csql = "UPDATE users SET `wallet` = '$newbal' WHERE `usname` = '$user'";
-    $cres = query($csql);
-}
-
-
-function getglobalbank($bnknme) {
-
-    $sql = "SELECT * FROM `bank` WHERE `bank` = '$bnknme'";
-    $res =  query($sql);
-
-    $GLOBALS['bnkcode'] = mysqli_fetch_array($res);
-
-}
-
-
-
-function transfertoall($bkncedo, $tranamt, $note, $profit) {
-
-    $amt = $tranamt * 100;
-    $adm = $profit * 100;
-    echo $bkncedo;
-  
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://api.paystack.co/transfer/bulk',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS =>'{
-        "currency": "NGN",
-        "source": "balance",
-        "transfers": [
-            {
-            "amount": '.$amt.',
-            "recipient": "'.$bkncedo.'",
-            "reason": "'.$note.'"
-            },
-            {
-            "amount": '.$adm.',
-            "recipient": "RCP_b5dkyp3impxed9i",
-            "reason": "BooksinVogue"
-            }
-        ]
-    }',
-    CURLOPT_HTTPHEADER => array(
-        'Authorization: Bearer sk_live_b54f90fbf6225a7a0c59cc686873888f44a14986',
-        'Content-Type: application/json'
-    ),
-    ));
-
-    $response = curl_exec($curl);
-
-    curl_close($curl);
-
-   
-}
-
-
-
-//credit author
-function creditauthor($athmail, $royal, $profit) {
-
-    authordetails($athmail);
-
-    
-    $actname = $GLOBALS['athdata']['act name'];
-    $actnum  = $GLOBALS['athdata']['act no'];
-    $bnknme  = $GLOBALS['athdata']['bnk nme'];
-
-
-    //get bank code
-    getglobalbank($bnknme);
-
-    $bnkcode = $GLOBALS['bnkcode']['bnkcode'];
-
-    $url = "https://api.paystack.co/transferrecipient";
-
-    $fields = [
-      "type" => "nuban",
-      "name" => $actname,
-      "account_number" => $actnum,
-      "bank_code" => $bnkcode,
-      "currency" => "NGN"
-    ];
-  
-    $fields_string = http_build_query($fields);
-  
-    //open connection
-    $ch = curl_init();
-    
-    //set the url, number of POST vars, POST data
-    curl_setopt($ch,CURLOPT_URL, $url);
-    curl_setopt($ch,CURLOPT_POST, true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-      "Authorization: Bearer sk_live_b54f90fbf6225a7a0c59cc686873888f44a14986",
-      "Cache-Control: no-cache",
-    ));
-    
-    //So that curl_exec returns the contents of the cURL; rather than echoing it
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-    
-    //execute post
-    $result = curl_exec($ch);
-  
-    $info = json_decode($result);
-    
-    $bkncedo = $info->data->recipient_code;
-
-    $tranamt = $royal;
-    $note    = "You made a successful sale";
-
-    //initate transfer
-    transfertoall($bkncedo, $tranamt, $note, $profit);
-}
-
-
-
-
-//fund user, admin, author or publisher  wallet
-function globalpayinitatorforusers($amt, $user, $date, $tref) {
-
-    //get previous wallet balance
-    user_details();
-
-    $prvamt     = $GLOBALS['t_users']['wallet'];
-
-    $newbal     = $prvamt + $amt;
-    $note       = "Your wallet was credited with ₦".number_format($amt);
-    $paystat    = "credit";
-
-    //credit user
-    updateuserwallet($user, $newbal);
-
-    //insert into transaction history
-    insertintotransact($tref, $amt, $date, $user, $note, $paystat);
-
-    //redirect to home
-    $_SESSION['paymsg'] = "Your Wallet has been funded successfully";
-}
-
-
-
-//buy a service even if wallet is empty
-function buywithemptywallet($amt, $user, $date, $tref, $bkid) {
-
-    $data = $bkid;
-    
-
-    book_details($data);    //get book details
-    retrieveadmindata();    //get global royalty
-    user_details();         //get user details
-
-    $bktitle = $GLOBALS['editdraft']['book_title'];
-    $bbid    = "bbid".rand(0, 999);
-
-    $athmail = $GLOBALS['editdraft']['email_address'];
-
-    $price   = $GLOBALS['editdraft']['selling_price'];
-    $royal   = $GLOBALS['editdraft']['royalty_price'];   //$GLOBALS['globaladm']['fee'];
-
-    $note    = "You made a payment of ₦".number_format($amt);
-    $royalnt = "A user just bought - ".$bktitle;
-    $paystat = 'payment';
-    $rdstat  = 'Yes';
-    
-
-    //insert into transaction history
-    insertintotransact($tref, $amt, $date, $user, $note, $paystat);
-
-
-    //add book to user bookshelf
-    insertbookshelforwishlist($bbid, $bkid, $user, $tref, $rdstat, $athmail, $price, $royal);
-
-    
-    //check if book was in wishlist previously
-    if(wishlist_exist($user, $bkid)) {
-
-        //if a matching record is found, delete the matching record
-        $wdl = "DELETE FROM boughtbook WHERE `userid` = '$data' AND `reading` = 'wishlist' AND `bookid` = '$bkid'";
-        $wrl = query($wdl);
-
-    } 
-
-
-    //admin profit
-    $profit = $price - $royal;
-
-
-    //credit author wallet
-    creditauthor($athmail, $royal, $profit);
-
-    //credit admin account
-    //admincredit($profit);
-
-    //insert into royalties
-    thirdpartyroyal($tref, $royal, $date, $athmail, $royalnt);
-
-    //notify author via mail about credit and book purchase
-
-    $roya = "You just made a royalty earning of ₦".number_format($royal)." by selling the book - $bktitle";
-
-
-    $aumsg = <<<DELIMITER
-    
-                        <tr>
-                        <p style="color: black; font-weight: bold; margin-top: 24px !important;">You just sold a book! 😍🤩</p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-top: 8px !important;">Hi there,</p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-top: 8px !important;">$roya</p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-top: 8px !important;">Kindly login to your account to review your royalty.</p>
-                        </tr>
-                        <p style="color: black; margin-top: 8px !important;">Your payment will be settled into your account within 24hours</p>
-                        </tr>
-                        <p style="color: black; margin-top: 8px !important;">Got any issues, complaint or request? Kindly chat with us on our <a target="_blank" href="https://booksinvogue.com/contact">live chat support panel</a></p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-top: 8px !important;">Keep having a wonderful book experience</a></p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-bottom: 32px !important;">⚡ Best Regards</p>
-                        </tr>
-    
-            DELIMITER;
-
-
-            $auemail = $athmail;
-            $ausubj = "Credit Alert";
-
-            notify_author($auemail, $aumsg, $ausubj);
-
-
-    //notify user about debit and new book purchase
-
-    $note = "Your have been debited ₦".number_format($amt)." for purchasing a <b>$bktitle</b> on Books In Vogue";
-
-
-    $msg = <<<DELIMITER
-    
-                        <tr>
-                        <p style="color: black; font-weight: bold; margin-top: 24px !important;">You just purchased a new book! 💵 </p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-top: 8px !important;">Hi there,</p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-top: 8px !important;">$note</p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-top: 8px !important;">Got any issues, complaint or request? Kindly chat with us on our <a target="_blank" href="https://booksinvogue.com/contact">live chat support panel</a></p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-top: 8px !important;">Keep having a wonderful book experience</a></p>
-                        </tr>
-                        <tr>
-                        <p style="color: black; margin-bottom: 32px !important;">⚡ Best Regards</p>
-                        </tr>
-    
-            DELIMITER;
-
-            $subj        = "Debit Alert";
-            $username    = $_SESSION['login'];
-            $email       = $GLOBALS['t_users']['email'];
-
-            notify_user($username, $email, $msg, $subj);
-
-
-            //redirect to user bookshelf
-            $_SESSION['bookmsg'] = "Your Wallet has been funded successfully";
-            
-            echo 'Loading... Please Wait';
-            echo '<script>window.location.href ="./bookshelf"</script>';
-        
-
-}
-
-
-
 //function for sending global default emails
 function mail_mailer($email, $activator, $subj, $msg) {
 
-    $to = $email;
-    $from = "info@booksinvogue.com";
-
-    $headers = "From: Booksinvogue ". $from . "\r\n";
-    $headers .= "Reply-To: ". $from . "\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
-    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-    $headers .= "X-Priority: 1 (Highest)\n";
-    $headers .= "Priority: urgent\n";
-    $headers .= "X-MSMail-Priority: High\n";
-    $headers .= "Importance: High\n";
-
-    $subject = $subj;
-
-    $body = <<<DELIMITER
-
-            <html>
-                <meta charset="utf-8" />
-                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-
-                <body style="background-color: #eaebed;  font-family: sans-serif;  font-size: 14px; line-height: 1.4; margin-bottom: 2rem !important; padding: 0;">
-
-
-                <div style="text-align: center !important; justify-content: center !important;">
-                <img style="max-width: 100%; height: auto; vertical-align: middle; box-sizing: border-box; width: 120px; margin-top: 24px !important;" src="https://dashboard.booksinvogue.com/assets/img/logo.png">
-                </div>
-
-                <div style="margin-right: 5%; margin-left: 5%;">
-
-                    <div style="padding-right: 1.105rem; padding-left: 1.105rem; margin-top: 24px !important; background-color: #fff; position: relative; display: flex; flex-direction: column; height: auto; word-wrap: break-word; background-clip: border-box; border: 0 solid #d9dee3; border-radius: 8px;">
-
-                   $msg
-
-
-                   </div>
-
-
-
-                </div>
-
-
-                <div style="text-align: center !important; margin-top: 19px !important; margin-bottom: 32px !important; justify-content: center !important;">
-                <p style="color: grey">&copy; Team Book In Vogue </p>
-
-                </div>
-
-               <tr></tr> 
-
-
-              </body>
-            </html>
-            
+  
+    $msg = <<<DELIMITER
+     
     DELIMITER;
     
-    $send = mail($to, $subject, $body, $headers, '-finfo@booksinvogue.com');
+
+    require 'autoload.php';
+
+    //Create a new PHPMailer instance
+    $mail = new PHPMailer();
+    
+    //Tell PHPMailer to use SMTP
+    $mail->isSMTP();
+    
+    //Enable SMTP debugging
+    //SMTP::DEBUG_OFF = off (for production use)
+    //SMTP::DEBUG_CLIENT = client messages
+    //SMTP::DEBUG_SERVER = client and server messages
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    //$mail->SMTPDebug  = SMTP::DEBUG_OFF;
+    
+    //Set the hostname of the mail server
+    //$mail->Host = 'send.smtp.mailtrap.io';
+    $mail->Host = 'mail.dotpedia.com.ng';
+    
+    //Use `$mail->Host = gethostbyname('smtp.gmail.com');`
+    //if your network does not support SMTP over IPv6,
+    //though this may cause issues with TLS
+    
+    //Set the SMTP port number:
+    // - 465 for SMTP with implicit TLS, a.k.a. RFC8314 SMTPS or
+    // - 587 for SMTP+STARTTLS
+    //$mail->Port = 465;
+    
+    $mail->Port = 465;
+    
+    //Set the encryption mechanism to use:
+    // - SMTPS (implicit TLS on port 465) or
+    // - STARTTLS (explicit TLS on port 587)
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    
+    //Whether to use SMTP authentication
+    $mail->SMTPAuth = true;
+    
+    //Username to use for SMTP authentication - use full email address for gmail
+    $mail->Username = 'hi@dotpedia.com.ng';
+    
+    //Password to use for SMTP authentication
+    $mail->Password = 'facdf2515000bccc8c5aab8ad41136c1';
+    //$mail->Password = 'gzoqmvzofoeddple';
+
+    // For most clients expecting the Priority header:
+    // 1 = High, 2 = Medium, 3 = Low
+    $mail->Priority = 1;
+    // MS Outlook custom header
+    // May set to "Urgent" or "Highest" rather than "High"
+    $mail->AddCustomHeader("X-MSMail-Priority: High");
+    // Not sure if Priority will also set the Importance header:
+    $mail->AddCustomHeader("Importance: High");
+    
+    //Password to use for SMTP authentication
+    //$mail->Password = 'pqoqdmrnufifmrbe';
+    
+    //Set who the message is to be sent from
+    //Note that with gmail you can only use your account address (same as `Username`)
+    //or predefined aliases that you have configured within your account.
+    //Do not use user-submitted addresses in here
+    $mail->setFrom('hi@dotpedia.com.ng', 'DotPedia');
+    
+    //Set an alternative reply-to address
+    //This is a good place to put user-submitted addresses
+    $mail->addReplyTo('hi@dotpedia.com.ng', 'DotPedia');
+    
+    //Set who the message is to be sent to
+    $mail->addAddress($email);
+    
+    //Set the subject line
+    $mail->Subject = 'Welcome to DotPedia';
+    
+    //Read an HTML message body from an external file, convert referenced images to embedded,
+    //convert HTML into a basic plain-text alternative body
+    $mail->msgHTML($msg);
+    
+    //Attach an image file
+    //$mail->addAttachment('images/phpmailer_mini.png');
+   
+    //send the message, check for errors
+    if ($mail->send()) {
+
+        return true;
+
+
+    } else {
+
+        echo 'Mailer Error: ' . $send->ErrorInfo;
+
+
+        return false;
+    }
 }
 
        
 
-//notify users mail
-function notify_user($username, $email, $msg, $subj) {
-
-    $to = $email;
-    $from = "info@booksinvogue.com";
-
-    $headers = "From: Booksinvogue ". $from . "\r\n";
-    $headers .= "Reply-To: ". $from . "\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
-    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-    $headers .= "X-Priority: 1 (Highest)\n";
-    $headers .= "Priority: urgent\n";
-    $headers .= "X-MSMail-Priority: High\n";
-    $headers .= "Importance: High\n";
-
-    $subject = $subj;
-
-    $body = <<<DELIMITER
-
-
-            <html>
-                <meta charset="utf-8" />
-                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-
-                <body style="background-color: #eaebed;  font-family: sans-serif;  font-size: 14px; line-height: 1.4; margin-bottom: 2rem !important; padding: 0;">
-
-
-                <div style="text-align: center !important; justify-content: center !important;">
-                <img style="max-width: 100%; height: auto; vertical-align: middle; box-sizing: border-box; width: 120px; margin-top: 24px !important;" src="https://dashboard.booksinvogue.com/assets/img/logo.png">
-                </div>
-
-                <div style="margin-right: 5%; margin-left: 5%;">
-
-                    <div style="padding-right: 1.105rem; padding-left: 1.105rem; margin-top: 24px !important; background-color: #fff; position: relative; display: flex; flex-direction: column; height: auto; word-wrap: break-word; background-clip: border-box; border: 0 solid #d9dee3; border-radius: 8px;">
-
-                   $msg
-
-
-                   </div>
-
-
-
-                </div>
-
-
-                <div style="text-align: center !important; margin-top: 19px !important; margin-bottom: 32px !important; justify-content: center !important;">
-                <p style="color: grey">&copy; Team Book In Vogue </p>
-
-                
-                </div>
-
-               <tr></tr> 
-
-
-              </body>
-            </html>
-    
-    DELIMITER;
-    
-    $send = mail($to, $subject, $body, $headers, '-finfo@booksinvogue.com');
-    
-}
-
-
-//notify author
-function notify_author($auemail, $aumsg, $ausubj) {
-
-    $to = $auemail;
-    $from = "info@booksinvogue.com";
-
-    $headers = "From: Booksinvogue ". $from . "\r\n";
-    $headers .= "Reply-To: ". $from . "\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
-    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-    $headers .= "X-Priority: 1 (Highest)\n";
-    $headers .= "Priority: urgent\n";
-    $headers .= "X-MSMail-Priority: High\n";
-    $headers .= "Importance: High\n";
-
-    $subject = $ausubj;
-
-    $body = <<<DELIMITER
-
-
-            <html>
-                <meta charset="utf-8" />
-                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-
-                <body style="background-color: #eaebed;  font-family: sans-serif;  font-size: 14px; line-height: 1.4; margin-bottom: 2rem !important; padding: 0;">
-
-
-                <div style="text-align: center !important; justify-content: center !important;">
-                <img style="max-width: 100%; height: auto; vertical-align: middle; box-sizing: border-box; width: 120px; margin-top: 24px !important;" src="https://dashboard.booksinvogue.com/assets/img/logo.png">
-                </div>
-
-                <div style="margin-right: 5%; margin-left: 5%;">
-
-                    <div style="padding-right: 1.105rem; padding-left: 1.105rem; margin-top: 24px !important; background-color: #fff; position: relative; display: flex; flex-direction: column; height: auto; word-wrap: break-word; background-clip: border-box; border: 0 solid #d9dee3; border-radius: 8px;">
-
-                   $aumsg
-
-
-                   </div>
-
-
-
-                </div>
-
-
-                <div style="text-align: center !important; margin-top: 19px !important; margin-bottom: 32px !important; justify-content: center !important;">
-                <p style="color: grey">&copy; Team Book In Vogue </p>
-
-                </div>
-
-               <tr></tr> 
-
-
-              </body>
-            </html>
-    
-    DELIMITER;
-    
-    $send = mail($to, $subject, $body, $headers, '-finfo@booksinvogue.com');
-    
-}
-
-
-//get book upload categories
-function category_details() {
-
-    $sql = "SELECT * FROM categories ORDER BY `name` asc";
-    $GLOBALS['category'] = query($sql);
-}
-
-
-
-///sql update books image in db
-function book_img($target_file2) {
-
-    if(isset($_SESSION['eddbookupl'])) {
-        
-    $cod     = $_SESSION['eddbookupl'];
-    $code    = str_replace('-', ' ', $cod);
-
-    //create notifictaion for edited
-    $_SESSION['edbkuplsuccess'] = $code;
-    
-    } else {
-
-    $cod     = $_SESSION['bookupl'];
-    $code    = str_replace('-', ' ', $cod);
-
-    }
-
-    $sql = "UPDATE `books` SET `book_cover` = '$target_file2', `book_status` = 'Show' WHERE `book_title` = '$code'";
-    $res = query($sql);
-
-    //notify user
-    $msg = <<<DELIMITER
-
-            <tr>
-            <p style="color: black; font-weight: bold; margin-top: 24px !important;">Your book has been published! 🤩🤗 </p>
-            </tr>
-            <tr>
-            <p style="color: black; margin-top: 8px !important;">Hi there,</p>
-            </tr>
-            <tr>
-            <p style="color: black; margin-top: 8px !important;">Your book has been successfully published and is now available for purchase and reading</p>
-            </tr>
-            <tr>
-            <p style="color: black; margin-top: 8px !important;">Got any issues, complaint or request? Kindly chat with us on our <a target="_blank" href="https://booksinvogue.com/contact">live chat support panel</a></p>
-            </tr>
-            <tr>
-            <p style="color: black; margin-top: 8px !important;">Keep having a wonderful book experience</a></p>
-            </tr>
-            <tr>
-            <p style="color: black; margin-bottom: 32px !important;">⚡ Best Regards</p>
-            </tr>
-
-    DELIMITER;
-
-
-    $subj = "Your Book is LIVE!";
-
-    user_details();
-    $email = $GLOBALS['t_users']['email'];
-    $username = $GLOBALS['t_users']['usname'];
-
-    notify_user($username, $email, $msg, $subj);
-    
-    echo "<script>shout(); $('#pybst').show();</script>";
-
-    unset($_SESSION['bookupl']);
-}
-
-
-//book countdown
-function bookcountdwon($duration, $id) {
-
-    $dd =  $duration;
-
-   echo '
-
-        <script language="JavaScript">
-        TargetDate = "'.$dd.'"
-        BackColor = "red";
-        ForeColor = "white";
-        CountActive = true;
-        CountStepper = -1;
-        LeadingZero = true;
-        DisplayFormat = "%%D%% D, %%H%% H, %%M%% M, %%S%% S.";
-        FinishMessage = "This book is no longer available for purchase";
-        </script>
-        <script language="JavaScript" src="https://rhashemian.github.io/js/countdown.js"></script>
-
-';
-}
-
-
-//get total book sold
-function book_sold() {
-
-    $email = $GLOBALS['t_users']['email'];
-
-    $sql = "SELECT *, sum(`id`) AS `totbook`, sum(`royalty`) AS `royalty` FROM boughtbook WHERE `authormail` = '$email'";
-    $res = query($sql);
-    if(row_count($res) == '') {
-
-    $GLOBALS['totbook'] = 0;
-
-    } else {
-    $row = mysqli_fetch_array($res);
-    $GLOBALS['totbook'] = $row['totbook'];
-    $GLOBALS['royal'] = $row['royalty'];
-    }
-}
-
-
-//get to tal book bought
-function book_bought() {
-
-    $user = $_SESSION['login'];
-
-    $sql = "SELECT *, sum(`id`) AS `bookbought` FROM `boughtbook` WHERE `userid` = '$user' AND `reading` = 'Yes'";
-    $res = query ($sql);
-
-    if(row_count($res) == '') {
-
-    $GLOBALS['bookbought'] = 0;
-
-    } else {
-
-    $row = mysqli_fetch_array($res);
-    $GLOBALS['bookbought'] = $row['bookbought'];
-    }
-}
-
-
-//get book details
-function getbooks() {
-
-    $amail = $t_users['email'];
-
-    $sql = "SELECT * FROM `books` WHERE `email_address` = '$amail' AND `book_status` = 'Show'";
-    $res = query($sql);
-
-}
- 
-
-//get book details
-function getbookdetails($booktype) {
-
-    user_details();
-    $usermail = $GLOBALS['t_users']['email'];
-
-    $sql = "SELECT * FROM `books` WHERE `email_address` = '$usermail' AND `book_title` = '$booktype'";
-    
-    $res = query($sql);
-
-    $GLOBALS['getbookdetails'] = mysqli_fetch_array($res);
-}
 
 
 
 //REGISTER USER
-function register($fname, $usname, $email, $pword, $ref, $catgy) {
+function register($fname, $email, $pword, $catgy) {
 
     $fnam = escape($fname);
-    $usname = escape($usname);
     $emai = escape($email);
     $pwor = md5($pword);
-    $ref  = escape($ref);
 
     $datereg = date("Y-m-d h:i:s");
 
@@ -1156,8 +431,8 @@ function register($fname, $usname, $email, $pword, $ref, $catgy) {
         
     $activator = otp();
     
-    $sql = "INSERT INTO users(`idd`, `fullname`, `usname`, `email`, `password`, `role`, `date_reg`, `status`, `active`, `lastseen`, `ref`, `wallet`)";
-    $sql.= " VALUES('1', '$fnam', '$usname', '$emai', '$pwor', '$catgy', '$datereg', '$activator', '0', '$datereg', '$ref', '0')";
+    $sql = "INSERT INTO users(`fullname`, `email`, `password`, `role`, `date_reg`, `status`, `active`, `lastseen`, `ref`, `wallet`)";
+    $sql.= " VALUES('$fnam', '$emai', '$pwor', '$catgy', '$datereg', '$activator', '0', '$datereg', '$ref', '0')";
     $result = query($sql);
 
     //redirect to verify function
@@ -1208,57 +483,40 @@ function register($fname, $usname, $email, $pword, $ref, $catgy) {
 
 
 //VALIDATE USER REGISTRATION
-if(isset($_POST['fname']) && isset($_POST['usname']) && isset($_POST['catgy']) && isset($_POST['email']) && isset($_POST['pword']) && isset($_POST['cpword']) && isset($_POST['ref'])) {
+if(isset($_POST['fname']) && isset($_POST['catgy']) && isset($_POST['email']) && isset($_POST['pword']) && isset($_POST['cpword'])) {
 
     $fname          = clean(escape($_POST['fname']));
-    $usname         = clean(escape($_POST['usname']));
-    $caty          = clean(escape($_POST['catgy']));
+    $caty           = clean(escape($_POST['catgy']));
     $email          = clean(escape($_POST['email']));
     $pword          = clean(escape($_POST['pword']));
     $cpword         = clean(escape($_POST['cpword']));
-    $ref            = clean(escape($_POST['ref']));
-
         
-    if($caty == "User (I am here to read books)") {
+    if($caty == "I am a patient") {
 
-        $catgy = 'user';
+        $catgy = 'Patient';
 
     } else {
 
-    if($caty == "Author (I just want to publish my books and read other author books)") {
+    if($caty == "I am a Doctor") {
 
-           $catgy = 'author';
+           $catgy = 'Doctor';
             
-        } else {
-
-    if($caty == "Publisher (I want to publish books for other authors)") {
-
-            $catgy = 'publisher';
-
-            }
-        }
+        } 
     }
 
         if(email_exist($email)) {
 
-            echo "This email address is already registered. <br/> Please sign in with your registered email details or enter a new email address.";
-        }else {
+            echo '<script>window.location.href ="./signin"</script>';
 
-            if (usname_exist($usname)) {
+        } else {
 
-                echo "Someone has already chosen that username.";
-    
-            } else {
-
-
-                register($fname, $usname, $email, $pword, $ref, $catgy);
+                register($fname, $email, $pword, $catgy);
                 
             }
 
-        }  
-
-}
+}  
   
+
 
 //RESEND OTP
 if(isset($_POST['otpp'])) {
@@ -1746,27 +1004,6 @@ if(isset($_POST['dataid'])) {
 
                                                 /****** FUNCTIONS AFTER VALDATIONS */
                                                                   
-                                                                                                                                              
-//add to wishlist
-if(isset($_POST['wishid'])) {
-
-    $bookid = clean(escape($_POST['wishid']));
-    $user  = $_SESSION['login'];
-    $wid = "biv/wsh/".rand(0,999);
-
-    $sql ="INSERT into boughtbook(`id`, `wid`, `bookid`, `userid`, `reading`)";
-    $sql.="VALUES('1', '$wid', '$bookid', '$user', 'wishlist')";
-    $res = query($sql);
-
-    /*$chck = <<<DELIMITER
-    
-    <i class="bx bx-check text-white"></i>
-    
-    DELIMITER;
-
-    echo $chck;*/
-    
-}
 
 
 //make payment for book
@@ -2648,54 +1885,7 @@ if(isset($_POST['fname']) && isset($_POST['usname']) && isset($_POST['email']) &
 }
 
 
-
-//free ads
-if(isset($_POST['advdura']) && isset($_POST['booktype']) && isset($_POST['date'])) {
-
-    //get details
-    $advdura  = intval(clean(escape($_POST['advdura'])));
-    $booktype = clean(escape($_POST['booktype']));
-    $advid    = "adv/".rand(0, 99999);
-
-    //get user details
-    user_details();
-    $usname = $GLOBALS['t_users']['usname'];
-    $usmail = $GLOBALS['t_users']['email'];
-
-    //set expiry date
-    $Date = date("Y-m-d");
-    $exp = date('Y-m-d', strtotime($Date. ' + '.$advdura.' days'));
-
-    //get book details
-    getbookdetails($booktype);
-    $bookid =  $GLOBALS['getbookdetails']['books_id'];
-
-
-    if(freebook_check($booktitle)) {
-
-
-    } else  {
-
-
-        
-    }
-
-    
-    //insert into db
-    $sql = "INSERT INTO advert(`bookid`, `book_title`, `advid`, `usname`, `adv type`, `adv price`, `adv startdate`, `duration`, `adv enddate`, `advstatus`)";
-    $sql.="VALUES('$bookid', '$booktype', '$advid', '$usname', 'free ads', '0', '$Date', '$advdura', '$exp', 'active')";
-    $res = query($sql);
-
-
-    //update the book duration to the set ads price
-    $sel = "UPDATE books SET `ads_price` = 0, `duration` = '$exp' WHERE `books_id` = '$bookid' AND `email` = '$usmail'";
-    $ses = query($sql);
-
-
-    echo 'Loading... Please wait';
-    echo '<script>window.location.href ="./adv"</script>';
-}
-             
+         
 
                                             
                                                 /****** END OF FUNCTIONS AFTER VALDATIONS */
