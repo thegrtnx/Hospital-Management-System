@@ -107,7 +107,7 @@ if($t_users['role'] == 'I am a Patient') {
 <br/>
 
 <li class="menu-item">
-  <a href="./pharmacy" class="menu-link">
+  <a href="./transaction" class="menu-link">
     <i class="menu-icon tf-icons bx bx-cube-alt"></i>
     <div data-i18n="Misc">Transaction History </div>
   </a>
@@ -116,7 +116,7 @@ if($t_users['role'] == 'I am a Patient') {
 <br/>
 
 <li class="menu-item">
-  <a href="./pharmacy" class="menu-link">
+  <a href="./profile" class="menu-link">
     <i class="menu-icon tf-icons bx bx-user"></i>
     <div data-i18n="Misc">Profile</div>
   </a>

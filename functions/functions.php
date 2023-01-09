@@ -458,6 +458,25 @@ function register($fname, $email, $pword, $catgy) {
 }  
 
 
+//get booking details
+function patientbookings() {
+
+    $email = $_SESSION['login'];
+
+    $sql = "SELECT * FROM book WHERE `email` = '$email'";
+    $res = query($sql);
+    
+    if(row_count($res) >= 1) {
+
+        return true;
+
+    } else {
+
+        return false;
+    }
+}
+
+
                                                     /****** END OF GLOBAL Functions********/
 
 
@@ -582,8 +601,8 @@ if(isset($_POST['aptdate']) && isset($_POST['bkmsg'])) {
     $email   = $_SESSION['login'];
 
     //insert into database
-    $ssl ="INSERT INTO book(`bkid`, `email`, `date`, `msg`)";
-    $ssl.="VALUES('$bkid', '$email', '$aptdate', '$bkmsg')";
+    $ssl ="INSERT INTO book(`bkid`, `email`, `date`, `msg`, `status`, `category`, `doctor_assigned`)";
+    $ssl.="VALUES('$bkid', '$email', '$aptdate', '$bkmsg', 'Pending Approval', 'Pending', 'Pending')";
     $sel = query($ssl);
 
     //redirect
@@ -591,6 +610,7 @@ if(isset($_POST['aptdate']) && isset($_POST['bkmsg'])) {
     echo '<script>window.location.href ="./appointment"</script>';
 
 }
+
 
 
 //FORGOT PASSWORD

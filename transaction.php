@@ -34,14 +34,9 @@
             <div class="container-xxl flex-grow-1 container-p-y">
 
 
-            <?php 
-            if(patientbookings()) {
-            
-            ?>
-
              <!-- Basic Bootstrap Table -->
              <div class="card mb-5">
-                <h5 class="card-header">Your Appointment</h5>
+                <h5 class="card-header">Transaction History</h5>
                 <div class="table-responsive text-nowrap">
                   <table class="table mb-3">
                     <thead>
@@ -59,7 +54,7 @@
                         
                         $email = $_SESSION['login'];
 
-                        $sql = "SELECT * FROM book WHERE `email` = '$email' ORDER BY `id` Desc";
+                        $sql = "SELECT * FROM book WHERE `email` = '$email'";
                         $res = query($sql);
 
                         while($row = mysqli_fetch_array($res)) {
@@ -84,47 +79,7 @@
              </div>
               <!--/ Basic Bootstrap Table -->
 
-              <?php 
-              
-                    } else {
-
-                    }
-                ?>
-             
-              <!-- Basic Layout -->
-              <div class="row">
-                <div class="col-xl-12">
-                    
-                  <div class="card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-header">Book an Appointment with a Doctor</h5>
-
-                    </div>
-                    <div class="card-body">
-                      <form>
- 
-                        <div class="mb-3">
-                          <label class="form-label" for="basic-default-phone">Pick an appointment date</label>
-                          <input
-                            type="date"
-                            id="aptdte"
-                            class="form-control"
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label" for="basic-default-message">What's your appointment for?</label>
-                          <textarea
-                            id="bkmsg"
-                            class="form-control"
-                            placeholder="Hi, Do you have a moment to talk Joe?"
-                          ></textarea>
-                        </div>
-                        <button type="button" id="bkdoc" class="btn btn-primary">Submit</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        
             </div>
             <!-- / Content -->
 
