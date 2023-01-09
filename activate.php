@@ -62,13 +62,13 @@
     include('functions/init.php');
     
     if(isset($_GET['vff'])) {
-              
+
         $data = clean(escape($_GET['vff']));
 
         $ssl = "UPDATE `users` SET `activator` = 'activated' WHERE `activator` = '$data'";
         $sel = query($ssl);
 
-          redirect("./404");        
+          redirect("./login");        
         
     } else {
 
