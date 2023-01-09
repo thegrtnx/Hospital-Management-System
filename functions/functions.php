@@ -572,6 +572,27 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 }
 
 
+//book an appointment with doctor
+if(isset($_POST['aptdate']) && isset($_POST['bkmsg'])) {
+
+    $aptdate = clean(escape($_POST['aptdate']));
+    $bkmsg   = clean(escape($_POST['bkmsg']));
+
+    $bkid    = "hmsbook/".otp();
+    $email   = $_SESSION['login'];
+
+    //insert into database
+    $ssl ="INSERT INTO book(`bkid`, `email`, `date`, `msg`)";
+    $ssl.="VALUES('$bkid', '$email', '$aptdate', '$bkmsg')";
+    $sel = query($ssl);
+
+    //redirect
+    echo "Almost complete... Please wait";
+    echo '<script>window.location.href ="./appointment"</script>';
+
+}
+
+
 //FORGOT PASSWORD
 if(isset($_POST['fgeml'])) {
     

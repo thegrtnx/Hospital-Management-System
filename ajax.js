@@ -85,264 +85,31 @@ $(document).ready(function () {
 
 
 
-  //forgot
-  $("#fsub").click(function () {
-    var fgeml = $("#femail").val();
+  //book appountment with doctor
+  $("#bkdoc").click(function () {
+    var aptdate = $("#aptdte").val();
+    var bkmsg = $("#bkmsg").val();
 
-    if (fgeml == "" || fgeml == null) {
-      $("#fmsg").html("Please insert your email");
+    if (aptdate == "" || aptdate == null) {
+      $(toastr.error("Please pick a date for your appointment"));
     } else {
-      $("#fmsg").html(
-        '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-      );
-
-      $.ajax({
-        type: "post",
-        url: "functions/init.php",
-        data: { fgeml: fgeml },
-        success: function (data) {
-          $("#fmsg").html(data);
-        },
-      });
-    }
-  });
-
-
-
-  //reset
-  $("#updf").click(function () {
-    var fgpword = $("#pword").val();
-    var fgcpword = $("#cpword").val();
-
-    if (fgpword == "" || fgpword == null) {
-      $("#umsg").html("Please create a new password");
-    } else {
-      if (fgcpword == "" || fgcpword == null) {
-        $("#umsg").html("Kindly confirm Your Password");
+      if (bkmsg == "" || bkmsg == null) {
+        $(toastr.error("State the reason for booking an appointment"));
       } else {
-        if (fgpword != fgcpword) {
-          $("#umsg").html("Password does not match!");
-        } else {
-          $("#umsg").html(
-            '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-          );
-
-          $.ajax({
-            type: "post",
-            url: "functions/init.php",
-            data: { fgpword: fgpword, fgcpword: fgcpword },
-            success: function (data) {
-              $("#umsg").html(data);
-            },
-          });
-        }
-      }
-    }
-  });
-
-
-
-  /******** USER PROFILE SECTION */
-
-  //getting books details
-  $(".offcanvasr").click(function () {
-    var dataid = $(this).attr("data-id");
-
-    $.ajax({
-      type: "post",
-      url: "functions/init.php",
-      data: { dataid: dataid },
-      success: function (data) {
-        $(".canvastale").html(data);
-      },
-    });
-  });
-
-
-
-  //search for books
-  $("#searcher").keyup(function () {
-    var searchword = $("#searcher").val();
-
-    //display content if words are empty
-    $("#allbook").hide();
-
-    if (searchword == null || searchword == "") {
-      $("#allbook").show();
-    } else {
-      //$("#searchresult").show(1000);
-
-      $.ajax({
-        type: "post",
-        url: "srchres.php",
-        data: { searchword: searchword },
-        success: function (data) {
-          $("#searchresult").html(data).show(1000);
-        },
-      });
-    }
-  });
-
-
-
-  //add to wishlist
-  $("#btwsh").click(function () {
-    var wishid = $("#srchid").val();
-
-    $("#btwsh").on("shown.bs.popover", function () {
-      setTimeout(function () {
-        $(".popover").fadeOut("slow", function () {});
-      }, 800);
-    });
-
-    $.ajax({
-      type: "post",
-      url: "functions/init.php",
-      data: { wishid: wishid },
-      success: function (data) {
-        //display content if words are empty
-        $("#btwsh").hide();
-
-        $("#addtwh").show();
-      },
-    });
-  });
-
-
-
-  //added to wishlist
-  $("#lksd").click(function () {
-    $("#lksd").on("shown.bs.popover", function () {
-      setTimeout(function () {
-        $(".popover").fadeOut("slow", function () {});
-      }, 800);
-    });
-  });
-
-
-  //cancel payment
-  $("#cnc").click(function () {
-    $("#clss").popover("hide");
-  });
-
-
-
-  //fund wallet
-  $("#paybtn").click(function () {
-    var amt = $("#amrp").val();
-
-    if (amt == "" || amt == null) {
-      $("#pymsg").html("Please input an amount");
-    } else {
-      if (amt < 100) {
-        $("#pymsg").html("The minimum amount you can fund is ₦100");
-      } else {
-        $("#pymsg").html(
-          '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-        );
-
-        var ema = $("#email").text();
-
-        let handler = PaystackPop.setup({
-          key: pk, // Replace with your public key
-          email: ema,
-          amount: amt * 100,
-          ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-          // label: "Optional string that replaces customer email"
-          onClose: function() {
-          
-            $("#pybstdd").show();
-            $("#pymsg").html('You cancelled your payment. <br/>Click on the "Fund Wallet" button to re-try funding your wallet');
-           
+        $.ajax({
+          type: "post",
+          url: "functions/init.php",
+          data: { aptdate: aptdate, bkmsg: bkmsg },
+            beforeSend: function() {
+                    $(toastr.clear());
+                    $("#bkdoc").html("Submitting... Please wait");
+                 },
+          success: function (data) {
+            $(toastr.success(data));
           },
-          callback: function(response){
-           
-            window.location = "./pay?reference=" + response.reference + "&stat=funding";
-            
-          }
         });
-      
-        handler.openIframe();
       }
     }
-  });
-
-
-
-  //insufficient fund to buy book, pay directly without funding
-  $("#hey").click(function () {
-
-    var amt = $("#amount").val();
-    var bkid = $("#bookid").val();
-    var emal = $("#email-address").val();
-
-    $("#bkpymsg").html('<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait');
-    
-
-    let handler = PaystackPop.setup({
-      key: pk, // Replace with your public key
-      email: emal,
-      amount: amt * 100,
-      ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-      // label: "Optional string that replaces customer email"
-      onClose: function() {
-      
-        $("#bkpymsg").html('You cancelled your payment');
-       
-      },
-      callback: function(response){
-       
-        window.location = "./pay?reference=" + response.reference + "&stat=buying&bbid=" + bkid;
-        
-      }
-    });
-  
-    handler.openIframe();
-    //alert("hello");
-  })
-
-
-
-  //buy book
-  $("#bkkpaybtn").click(function () {
-    $("#bkpymsg").html(
-      '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-    );
-
-    var amt = $("#bkamt").text();
-    var bkid = $("#bkid").text();
-    var authoremail = $("#authoremail").text();
-    var bkprice = $("#bkprice").text();
-    var rylty = $("#rylty").text();
-
-    $.ajax({
-      type: "post",
-      url: "functions/init.php",
-      data: { amt: amt, bkid: bkid, authoremail: authoremail, bkprice: bkprice, rylty: rylty },
-      success: function (data) {
-        $("#bkpymsg").html(data);
-      },
-    });
-  });
-
-
-
-  //upgrade account
-  $("#upgrd").click(function () {
-    $("#note").html(
-      '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-    );
-
-    var upgrade = 'author';
-
-    $.ajax({
-      type: "post",
-      url: "functions/init.php",
-      data: { upgrade: upgrade },
-      success: function (data) {
-        $("#note").html(data);
-      },
-    });
   });
 
 

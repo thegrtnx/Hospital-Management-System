@@ -33,6 +33,8 @@
 <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
 <link rel="stylesheet" href="assets/vendor/libs/apex-charts/apex-charts.css" />
+<link rel="stylesheet" href="assets/css/bootstrap-4.min.css" />
+<link href="assets/css/toastr.css" rel="stylesheet"/>
 
 <!-- Page CSS -->
 
