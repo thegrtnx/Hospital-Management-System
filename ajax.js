@@ -115,7 +115,7 @@ $(document).ready(function () {
 
   
   //save profile details changes
-  $("#svchng").click(function () {
+  $("#updtpro").click(function () {
 
     var tel = $("#phoneNumber").val();
     var add = $("#address").val();
@@ -169,20 +169,18 @@ $(document).ready(function () {
         
             } else {
 
-          
-
-      $("#msg").html(
-        '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-      );
-
-      $.ajax({
-        type: "post",
-        url: "functions/init.php",
-        data: {fname: fname, usname: usname, email: email, tel: tel, idl: idl, ndl: ndl},
-        success: function (data) {
-          $("#msg").html(data);
-        },
-      });
+            $.ajax({
+              type: "post",
+              url: "functions/init.php",
+              data: {tel: tel, add: add, state: state, genotype: genotype, blood: blood, gender: gender, lang: lang},
+              beforeSend: function() {
+                $(toastr.clear());
+                $("#updtpro").html("Submitting... Please wait");
+             },
+            success: function (data) {
+              $(toastr.success(data));
+            },
+            });
       
     }
         
