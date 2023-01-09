@@ -27,65 +27,41 @@
 
           <!-- / Navbar -->
 
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Pharmacy & Drugs</h4>
 
-
-             <!-- Basic Bootstrap Table -->
-             <div class="card mb-5">
-                <h5 class="card-header">Transaction History</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table mb-3">
-                    <thead>
-                      <tr>
-                            <th>Transaction ID</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Payment Date</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        <?php
-                        
-                        $email = $_SESSION['login'];
-
-                        $sql = "SELECT * FROM this WHERE `email` = '$email'";
-                        $res = query($sql);
-
-                        while($row = mysqli_fetch_array($res)) {
-                        ?>
-                    
-                      <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><?php echo $row['tid'] ?></strong></td>
-                        <td><?php echo $row['amt'] ?></td>
-                        <td><?php echo $row['status'] ?></td>
-                        <td><span class="badge bg-label-primary me-1"><?php echo date('l, F d, Y', strtotime($row['pdate'])); ?></span></td>
-                      </tr>
-
-                      <?php
-                        }
-                      ?>
-                     
-                    </tbody>
-                  </table>
+              <!-- Examples -->
+              <div class="row mb-5">
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div class="card h-100">
+                    <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap" />
+                    <div class="card-body">
+                      <h5 class="card-title">Ibupain</h5>
+                      
+                      <a href="javascript:void(0)" class="btn btn-outline-primary">Buy this drug</a>
+                    </div>
+                  </div>
                 </div>
-             </div>
-              <!--/ Basic Bootstrap Table -->
+               
+              </div>
+              <!-- Examples -->
 
-        
+
             </div>
             <!-- / Content -->
 
             <!-- Footer -->
-            <?php include("components/footer.php") ?>
+            <<?php include("components/footer.php") ?>
             <!-- / Footer -->
 
             <div class="content-backdrop fade"></div>
           </div>
           <!-- Content wrapper -->
+
         </div>
         <!-- / Layout page -->
       </div>
