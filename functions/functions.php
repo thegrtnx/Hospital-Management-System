@@ -466,7 +466,8 @@ function register($fname, $email, $pword, $catgy) {
     
     mail_mailer($email, $activator, $subj, $msg);
 
-    echo '<script>window.location.href ="./activate"</script>';
+    echo 'Almost Complete...';
+    echo '<script>window.location.href ="./activate?eml='.$email.'"</script>';
 
 }  
 
@@ -485,7 +486,7 @@ function register($fname, $email, $pword, $catgy) {
 if(isset($_POST['fname']) && isset($_POST['catgy']) && isset($_POST['email']) && isset($_POST['pword']) && isset($_POST['cpword'])) {
 
     $fname          = clean(escape($_POST['fname']));
-    $caty           = clean(escape($_POST['catgy']));
+    $catgy           = clean(escape($_POST['catgy']));
     $email          = clean(escape($_POST['email']));
     $pword          = clean(escape($_POST['pword']));
     $cpword         = clean(escape($_POST['cpword']));
@@ -502,139 +503,6 @@ if(isset($_POST['fname']) && isset($_POST['catgy']) && isset($_POST['email']) &&
             }
     
 }  
-  
-
-
-//RESEND OTP
-if(isset($_POST['otpp'])) {
-
-    $otpp = clean(escape($_POST['otpp']));
-    
-    $email = $_SESSION['usermail'];
-    
-    $activator = otp(); 
-
-    $sql = "UPDATE users SET `status` = '$activator', `verified` = 'No' WHERE `email` = '$email'";
-    $res = query($sql);
-
-    $subj = "NEW OTP REQUEST";
-    
-    $msg = <<<DELIMITER
-
-                <tr>
-                <p style="color: black; font-weight: bold; margin-top: 24px !important;">🔏 You requested for a new OTP Code </p>
-                </tr>
-                <tr>
-                <p style="color: black; margin-top: 8px !important;">⬇️ Kindly use the code below to continue into your account</p>
-                </tr>
-                <tr>
-                <p style="color: black; margin-top: 8px !important;">🔒  Do not share this code outside Books In Vogue website or Mobile App</p>
-                </tr>
-                
-
-                    <tr>
-                <div style="text-align: center !important; margin-top: 24px !important; margin-bottom: 8px !important; justify-content: center !important;">
-                <button style="background-color: #696cff; color: #fff; font-size: x-large; border: none; padding: 0.4375rem 1.25rem; border-radius: 0.4rem;">$activator</button>
-                </div>
-
-                </tr>  
-
-                <tr>
-                <p style="color: black; margin-bottom: 32px !important;">⚡ If you didn't request for this mail, kindly ignore it.</p>
-                </tr>
-
-    DELIMITER;
-    
-    mail_mailer($email, $activator, $subj, $msg);
-    echo "New OTP Code sent to your email";
-}
-
-
-//Activate OTP ACCOUNT
-if(isset($_POST['votp'])) {
-
-    $email = $_SESSION['usermail'];
-    $veotp = clean(escape($_POST['votp']));
-
-
-    //select the otp stored in the user database
-    $ssl = "SELECT * from users WHERE `email` = '$email'";
-    $res = query($ssl);
-
-    if(row_count($res) == null) {
-        
-        echo "There was an error validating your OTP. <br/> Please try again later.";
-
-    } else {
-
-        $row = mysqli_fetch_array($res);
-
-        $votp = $row['status'];
-
-        if($veotp != $votp) {
-
-            echo "Invalid OTP Code!";
-            
-        } else {
-
-            //update database and auto-login
-            $sql = "UPDATE users SET `status` = '2', `verified` = 'Yes' WHERE `email` = '$email'";
-            $rsl = query($sql);
-
-            $user = $row['usname'];
-
-            //forgot password recovery page
-            if(!isset($_SESSION['vnext'])) {
-
-                $username = $user;
-                
-                $role = $row['role'];
-
-                $subj = "You are Welcome";
-
-                $msg = <<<DELIMITER
-
-                            <tr>
-                            <p style="color: black; font-weight: bold; margin-top: 24px !important;">🥳 Welcome to the Books In Vogue Tribe </p>
-                            </tr>
-                            <tr>
-                            <p style="color: black; margin-top: 8px !important;">Hi there,</p>
-                            </tr>
-                            <tr>
-                            <p style="color: black; margin-top: 8px !important;">We are super excited to have you on Books In Vogue</p>
-                            </tr>
-                            <tr>
-                            <p style="color: black; margin-top: 8px !important;">Books In Vogue is a platform developed to help you read amazing books, upload your own book(s) or publish books for other authors.</p>
-                            </tr>
-                            <tr>
-                            <p style="color: black; margin-top: 8px !important;">We will continue to enhance the experience of our interfaces to ensure that you enjoy a seamless reading feel.</p>
-                            </tr>
-                            <tr>
-                            <p style="color: black; margin-top: 8px !important;">Got any issues, complaint or request? Kindly chat with us on our <a target="_blank" href="https://booksinvogue.com/contact">live chat support panel</a></p>
-                            </tr>
-                            <tr>
-                            <p style="color: black; margin-top: 8px !important;">Do have a wonderful book experience</a></p>
-                            </tr>
-                            <tr>
-                            <p style="color: black; margin-bottom: 32px !important;">⚡ Best Regards</p>
-                            </tr>
-
-                DELIMITER;
-
-                //notify user that passowrd has been changed
-                notify_user($username, $email, $msg, $subj);
-
-                //redirect to user dashboard according to user category
-                role_director($username, $role);
-
-                } else {
-                    
-                    $data = $_SESSION['vnext'];
-                    echo '<script>'.$data.'</script>';
-                }
-        }
-    }
-}
 
 
 //SIGN IN USER
@@ -643,26 +511,24 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
         $username        = clean(escape($_POST['username']));
         $password        = md5($_POST['password']);
 
-        $sql = "SELECT * FROM `users` WHERE `usname` = '$username' OR `email` = '$username' AND `password` = '$password'";
+        $sql = "SELECT * FROM `users` WHERE `email` = '$username' AND `password` = '$password'";
         $result = query($sql);
         if(row_count($result) == 1) {
 
             $row        = mysqli_fetch_array($result);
 
-            $user       = $row['usname'];
+
             $email      = $row['email'];
-            $activate   = $row['verified'];
+            $activate   = $row['activator'];
             $role       = $row['role'];
             
 
-            if ($activate == 'No') {
+            if ($activate != 'activated') {
 
-                $activator = otp();
-
-                $_SESSION['usermail'] = $email;
+                $activator = md5(otp());
 
                 //update activation link
-                $ups = "UPDATE users SET `status` = '$activator', `verified` = 'No' WHERE `usname` = '$username'";
+                $ups = "UPDATE users SET `activator` = '$activator' WHERE `email` = '$email'";
                 $ues = query($ups);
 
                 //redirect to verify function
@@ -700,13 +566,17 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
                 mail_mailer($email, $activator, $subj, $msg);
 
                 //open otp page
-                echo 'Loading... Please Wait!';
-                echo '<script>otpVerify(); signupClose();</script>';
+                echo 'Almost Complete...';
+                echo '<script>window.location.href ="./activate?eml='.$email.'"</script>';
 
                 
             }  else {
 
-                role_director($username, $role);
+                $_SESSION['login'] = $email;
+
+                echo 'Almost Complete...';
+                echo '<script>window.location.href ="./"</script>';
+                
         } 
 
     }  else {

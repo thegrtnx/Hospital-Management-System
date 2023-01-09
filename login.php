@@ -43,12 +43,15 @@
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="assets/vendor/css/pages/page-auth.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-4.min.css" />
+    <link href="assets/css/toastr.css" rel="stylesheet"/>
     <!-- Helpers -->
     <script src="assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="assets/js/config.js"></script>
+    
   </head>
 
   <body>
@@ -62,7 +65,7 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="index.html" class="app-brand-link gap-2">
+                <a href="./" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
                     <svg
                       width="25"
@@ -125,15 +128,15 @@
               <h4 class="mb-2">Welcome👋</h4>
               <p class="mb-4">Please sign-in to your account</p>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" method="POST">
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email or Username</label>
+                  <label for="email" class="form-label">Email</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="email"
+                    id="luname"
                     name="email-username"
-                    placeholder="Enter your email or username"
+                    placeholder="Enter your email"
                     autofocus
                   />
                 </div>
@@ -147,7 +150,7 @@
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
-                      id="password"
+                      id="lpword"
                       class="form-control"
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -156,14 +159,9 @@
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
+               
                 <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                  <button class="btn btn-primary d-grid w-100" type="button" id="lsub">Sign in</button>
                 </div>
               </form>
 
@@ -197,6 +195,28 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="js/toastr.js"></script>
+    <script src="assets/js/toastr.min.js"></script>
+
+    <script>
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+  </script>
 
     <!-- Page JS -->
     <script src="ajax.js"></script>

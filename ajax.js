@@ -29,10 +29,6 @@ $(document).ready(function () {
               if (pword != cpword) {
                 $(toastr.error("Password does not match"));
               } else {
-                $("#msg").html(
-                  '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-                );
-
                 $.ajax({
                   type: "post",
                   url: "functions/init.php",
@@ -60,111 +56,27 @@ $(document).ready(function () {
 
 
 
-  //resend otp
-  $("#rotp").click(function () {
-    $("#otptitle").html("We've sent you another OTP ✅");
-
-    //I left this code so as to give a dummy text to the function validator
-    var otpp = "dummy";
-
-    $("#vmsg").html(
-      '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-    );
-
-    $.ajax({
-      type: "post",
-      url: "functions/init.php",
-      data: { otpp: otpp },
-      success: function (data) {
-        $("#vmsg").html(data);
-      },
-    });
-  });
-
-
-  //verify otp
-  $("#vsub").click(function () {
-    var digit1 = $("#digit-1").val();
-    var digit2 = $("#digit-2").val();
-    var digit3 = $("#digit-3").val();
-    var digit4 = $("#digit-4").val();
-
-    if (digit1 == "" || digit1 == null) {
-      $("#vmsg").html("Invalid OTP!");
-    } else {
-      if (digit2 == "" || digit2 == null) {
-        $("#vmsg").html("Invalid OTP!");
-      } else {
-        if (digit3 == "" || digit3 == null) {
-          $("#vmsg").html("Invalid OTP!");
-        } else {
-          if (digit4 == "" || digit4 == null) {
-            $("#vmsg").html("Invalid OTP!");
-          } else {
-            var votp = digit1 + digit2 + digit3 + digit4;
-
-            $("#vmsg").html(
-              '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-            );
-
-            $.ajax({
-              type: "post",
-              url: "functions/init.php",
-              data: { votp: votp },
-              success: function (data) {
-                $("#vmsg").html(data);
-              },
-            });
-          }
-        }
-      }
-    }
-
-    alert(allotp);
-    /* var votp   = $("#otpper").val();
-   var votp   = $("#otpper").val();
-   var votp   = $("#otpper").val();
-
-  document.getElementById("rvmsg").style.display = 'none';
-  document.getElementById("vmsg").style.display = 'block';
-
-      if (votp == "" || votp == null) {
-      $("#vmsg").html("Invalid OTP!");
-    } else {
-    $("#vmsg").html("Loading... Please Wait");
-    $.ajax({
-      type: "post",
-      url: "functions/init.php",
-      data: {votp: votp},
-      success: function (data) {
-        $("#vmsg").html(data);
-      },
-    });
-  }*/
-  });
-
-
-
   //signin
   $("#lsub").click(function () {
     var username = $("#luname").val();
     var password = $("#lpword").val();
 
     if (username == "" || username == null) {
-      $("#lumsg").html("Kindly insert your username");
+      $(toastr.error("Kindly insert your email"));
     } else {
       if (password == "" || password == null) {
-        $("#lupmsg").html("Invalid password inputted");
+        $(toastr.error("Your password is empty"));
       } else {
-        $("#lmsg").html(
-          '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
-        );
         $.ajax({
           type: "post",
           url: "functions/init.php",
           data: { username: username, password: password },
+            beforeSend: function() {
+                    $(toastr.clear());
+                    $("#sub").html("Submitting... Please wait");
+                 },
           success: function (data) {
-            $("#lmsg").html(data);
+            $(toastr.success(data));
           },
         });
       }
