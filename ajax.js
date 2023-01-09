@@ -117,30 +117,59 @@ $(document).ready(function () {
   //save profile details changes
   $("#svchng").click(function () {
 
-    var fname = $("#fname").val();
-    var usname = $("#usname").val();
-    var email = $("#email").val();
     var tel = $("#phoneNumber").val();
-    var idl = $("#id").val();
-    var ndl = "hello profile";
+    var add = $("#address").val();
+    var state = $("#state").val();
+    var genotype = $("#genotype").val();
+    var blood = $("#blood").val();
+    var gender = $("#gender").val();
+    var lang = $("#lang").val();
 
-    if(fname == null || fname == '') {
+    if(tel == null || tel == '') {
 
-      $("#msg").html('Please input your first name');
-
-    } else {
-
-    if(usname == null || usname == '') {
-
-      $("#msg").html('Your username cannot be empty');
+      $(toastr.error("Please input a phone number"));
 
     } else {
 
-    if(email == null || email == '') {
+    if(add == null || add == '') {
 
-      $("#msg").html('Kindly input your email address');
+      $(toastr.error("Please provide your address"));
 
     } else {
+
+    if(state == null || state == '') {
+
+      $(toastr.error("Please provide your state"));
+
+    } else {
+
+      if(genotype == null || genotype == '') {
+
+        $(toastr.error("We need your genotype"));
+  
+      } else {
+
+
+        if(blood == null || blood == '') {
+
+          $(toastr.error("We need your blood group"));
+    
+        } else {
+
+          if(gender == null || gender == '') {
+
+            $(toastr.error("We need your gender"));
+      
+          } else {
+
+
+            if(lang == null || lang == '') {
+
+              $(toastr.error("What your language"));
+        
+            } else {
+
+          
 
       $("#msg").html(
         '<img style="width: 100px; height: 100px" src="assets/img/loading.gif"> <br/> Loading... Please wait'
@@ -156,6 +185,15 @@ $(document).ready(function () {
       });
       
     }
+        
+  }
+
+
+}
+
+}
+
+}
     }
     }
   });

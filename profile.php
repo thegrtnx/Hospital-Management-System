@@ -136,7 +136,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              id="organization"
+                              id="category"
                               name="organization"
                               value="<?php echo $t_users['role'] ?>" disabled
                             />
@@ -149,25 +149,24 @@
                                 id="phoneNumber"
                                 name="phoneNumber"
                                 class="form-control"
-                                value=""/>
+                                value="<?php echo $t_users['tel'] ?>"/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address" placeholder="Address" />
+                            <input type="text" class="form-control" id="address" value="<?php echo $t_users['address'] ?>" name="address"/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">State</label>
-                            <input class="form-control" type="text" id="state" name="state" placeholder="California" />
+                            <input class="form-control" type="text" id="state" name="state" value="<?php echo $t_users['state'] ?>" />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">Genotype</label>
                             <input
                               type="text"
                               class="form-control"
-                              id="zipCode"
+                              id="genotype"
                               name="zipCode"
-                              placeholder="231465"
-                              maxlength="6"
+                              value="<?php echo $t_users['genotype'] ?>"
                             />
                           </div>
                           <div class="mb-3 col-md-6">
@@ -175,29 +174,28 @@
                             <input
                               type="text"
                               class="form-control"
-                              id="zipCode"
+                              id="blood"
                               name="zipCode"
-                              placeholder="231465"
-                              maxlength="6"
+                             value="<?php echo $t_users['bloodgroup'] ?>"
                             />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="language" class="form-label">Gender</label>
-                            <select id="language" class="select2 form-select">
-                              <option value="">Select Language</option>
-                              <option value="en">Male</option>
-                              <option value="fr">Female</option>
+                            <select id="gender" class="select2 form-select">
+                              <option><?php echo $t_users['gender'] ?></option>
+                              <option>Male</option>
+                              <option>Female</option>
                             </select>
                           </div>
                         
                           <div class="mb-3 col-md-6">
                             <label for="currency" class="form-label">Language</label>
-                            <select id="currency" class="select2 form-select">
-                              <option value="">Select Currency</option>
-                              <option value="usd">English</option>
-                              <option value="euro">Yoruba</option>
-                              <option value="pound">Igbo</option>
-                              <option value="bitcoin">Hausa</option>
+                            <select id="lang" class="select2 form-select">
+                              <option><?php echo $t_users['language'] ?></option>
+                              <option>English</option>
+                              <option>Yoruba</option>
+                              <option>Igbo</option>
+                              <option>Hausa</option>
                             </select>
                           </div>
                         </div>
