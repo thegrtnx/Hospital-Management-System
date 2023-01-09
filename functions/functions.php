@@ -619,8 +619,16 @@ if(isset($_POST['tel']) && isset($_POST['add']) && isset($_POST['state']) && iss
     $genders = clean(escape($_POST['gender']));
     $lang = clean(escape($_POST['lang']));
 
+    $email = $_SESSION['login'];
 
-    
+
+    $sql ="UPDATE users SET `tel` = '$tel', `address` = '$add', `state` = '$state', `genotype` = '$geno', `bloodgroup` = '$blood', `gender` = '$genders', `language` = '$lang' WHERE `email` = '$email'";
+    $res = query($sql);
+
+    echo "Almost complete...";
+    echo '<script>window.location.href ="./"</script>';
+
+
 }
 
 
