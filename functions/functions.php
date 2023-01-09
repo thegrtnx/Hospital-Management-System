@@ -268,15 +268,10 @@ function user_details() {
         $data = $_SESSION['login'];
 
         //users details
-        $sql = "SELECT * FROM users WHERE `usname` = '$data' OR `email` = '$data'";
+        $sql = "SELECT * FROM users WHERE `email` = '$data'";
         $rsl = query($sql);
 
-        //get admin details for authors
-        $rem = "SELECT * FROM admin";
-        $res = query($rem);
-
-        $GLOBALS['t_admin'] = mysqli_fetch_array($res);
-
+       
         //check if user details is valid
         if(row_count($rsl) == '') {
 
@@ -285,23 +280,6 @@ function user_details() {
         } else {
 
         $GLOBALS['t_users'] = mysqli_fetch_array($rsl);
-
-        //set passport for empty passport
-        if($GLOBALS['t_users']['passport'] == null && $GLOBALS['t_users']['role'] == 'USER' || $GLOBALS['t_users']['role'] == 'user') {
-            
-            $GLOBALS['passport'] = 'assets/img/user.png';
-
-        } else {
-
-            if($GLOBALS['t_users']['passport'] == null && $GLOBALS['t_users']['role'] == 'author' || $GLOBALS['t_users']['role'] == 'AUTHOR' || $GLOBALS['t_users']['role'] == 'publisher' || $GLOBALS['t_users']['role'] == 'PUBLISHER') {
-                
-                $GLOBALS['passport'] = '../assets/img/user.png';
-            } else {
-
-                $GLOBALS['passport'] = '../assets/img/'.$GLOBALS['t_users']['passport'];
-            }
-
-        }
     }
 
     }

@@ -66,59 +66,85 @@
 
 <div class="menu-inner-shadow"></div>
 
+
+<?php  
+if($t_users['role'] == 'I am a Patient') {
+
+
+  echo '
+  
+    
 <ul class="menu-inner py-1">
-  <br/>
-  <!-- Dashboard -->
-  <li class="menu-item">
-    <a href="./" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-home-circle"></i>
-      <div data-i18n="Analytics">Dashboard</div>
-    </a>
-  </li>
+<br/>
+<!-- Dashboard -->
+<li class="menu-item">
+  <a href="./" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+    <div data-i18n="Analytics">Dashboard</div>
+  </a>
+</li>
 
-  <br/>
-
-  <!-- Layouts -->
-  <li class="menu-item">
-    <a href="./appointment" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-layout"></i>
-      <div data-i18n="Layouts">Appointment</div>
-    </a>
-
-  </li>
 <br/>
 
-  
-  <li class="menu-item">
-    <a href="./pharmacy" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-      <div data-i18n="Misc">Pharmacy</div>
-    </a>
-  </li>
+<!-- Layouts -->
+<li class="menu-item">
+  <a href="./appointment" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-layout"></i>
+    <div data-i18n="Layouts">Appointment</div>
+  </a>
 
-  <br/>
-
-  <li class="menu-item">
-    <a href="./pharmacy" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-      <div data-i18n="Misc">Transaction History </div>
-    </a>
-  </li>
-
-  <br/>
-
-  <li class="menu-item">
-    <a href="./pharmacy" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-user"></i>
-      <div data-i18n="Misc">Profile</div>
-    </a>
-  </li>
+</li>
 <br/>
-  <li class="menu-item">
-    <a href="./logout" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-lock"></i>
-      <div data-i18n="User interface">Logout</div>
-    </a>
+
+
+<li class="menu-item">
+  <a href="./pharmacy" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+    <div data-i18n="Misc">Pharmacy</div>
+  </a>
+</li>
+
+<br/>
+
+<li class="menu-item">
+  <a href="./pharmacy" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+    <div data-i18n="Misc">Transaction History </div>
+  </a>
+</li>
+
+<br/>
+
+<li class="menu-item">
+  <a href="./pharmacy" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-user"></i>
+    <div data-i18n="Misc">Profile</div>
+  </a>
+</li>
+<br/>
+<li class="menu-item">
+  <a href="./logout" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-lock"></i>
+    <div data-i18n="User interface">Logout</div>
+  </a>
+
+</li>
+</ul>
   
-  </li>
+  ';
+
+
+} else {
+
+  echo '
+  
+  
+  
+  
+  
+  
+  ';
+}
+?>
+
 </aside>

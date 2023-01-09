@@ -6,4 +6,6 @@ if(!isset($_SESSION['login'])) {
 redirect("./login");
 
 }
+
+user_details();
 ?>
