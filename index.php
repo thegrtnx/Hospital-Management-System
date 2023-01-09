@@ -36,68 +36,66 @@
               <div class="row">
 
                 <div class="col-lg-6 mb-4 order-0">
+                  <a href="./pharmacy">
                   <div class="card">
                   <div class="card-body">
                           <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                              <img src="assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                            </div>
-                            
+                                                        
                           </div>
-                          <span class="fw-semibold d-block mb-1">Purchase Drugs</span>
-                          <h3 class="card-title mb-2">$14,857</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
+                          
+                          <h3 class="card-title mb-2">Purchase <br/> Drugs</h3>
+                          <small class="text-dark fw-semibold">View and purchase available drugs <i class="bx bx-right-arrow-alt"></i></small>
                         </div>
                   </div>
+                  </a>
+                 
                 </div>
               
                 <div class="col-lg-6 mb-4 order-0">
+                  <a href="./appointment">
                   <div class="card">
                   <div class="card-body">
                           <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                              <img src="assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                            </div>
-                            
+                                                        
                           </div>
-                          <span class="fw-semibold d-block mb-1">Transactions</span>
-                          <h3 class="card-title mb-2">$14,857</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
+                          
+                          <h3 class="card-title mb-2">Book an appointment<br/> with a Doctor  </h3>
+                          <small class="text-dark fw-semibold">Schedule a meet with a doctor <i class="bx bx-right-arrow-alt"></i></small>
                         </div>
                   </div>
+                  </a>
+                  
                 </div>
 
                 <div class="col-lg-6 mb-4 order-0">
+                  <a href="./profile">
                   <div class="card">
                   <div class="card-body">
                           <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                              <img src="assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                            </div>
-                            
+                                                        
                           </div>
-                          <span class="fw-semibold d-block mb-1">Transactions</span>
-                          <h3 class="card-title mb-2">$14,857</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
+                          
+                          <h3 class="card-title mb-2">Edit <br/> Details  </h3>
+                          <small class="text-dark fw-semibold">Make changes to your profile details <i class="bx bx-right-arrow-alt"></i></small>
                         </div>
                   </div>
+                  </a>
                 </div>
 
 
                 <div class="col-lg-6 mb-4 order-0">
+                  <a href="tel: 911">
                   <div class="card">
                   <div class="card-body">
                           <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                              <img src="assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                            </div>
-                            
+                                                        
                           </div>
-                          <span class="fw-semibold d-block mb-1">Transactions</span>
-                          <h3 class="card-title mb-2">$14,857</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
+                          
+                          <h3 class="card-title mb-2">Call for <br/> Help/Emergency  </h3>
+                          <small class="text-dark fw-semibold">Need prompt help? <i class="bx bx-right-arrow-alt"></i></small>
                         </div>
                   </div>
+                  </a>
                 </div>
               
               </div>
