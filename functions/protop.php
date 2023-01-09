@@ -8,10 +8,4 @@ redirect("./login");
 }
 
 user_details();
-
-if($t_users['genotype'] == '') {
-
-    redirect("./profile");  
-
-}
 ?>

@@ -67,7 +67,7 @@
                     
                       <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><?php echo $row['bkid'] ?></strong></td>
-                        <td><?php echo $row['date'] ?></td>
+                        <td><?php echo date('l, F d, Y', strtotime($row['date'])); ?></td>
                         <td><?php echo $row['msg'] ?></td>
                         <td><span class="badge bg-label-primary me-1"><?php echo $row['status'] ?></span></td>
                         <td><?php echo $row['category'] ?></td>

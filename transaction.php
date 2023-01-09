@@ -41,13 +41,12 @@
                   <table class="table mb-3">
                     <thead>
                       <tr>
-                        <th>Appointment ID</th>
-                        <th>Date Booked</th>
-                        <th>Reason for <br/> appointment</th>
-                        <th>Status</th>
-                        <th>Category</th>
-                        <th>Doctor Assigned</th>
-                      </tr>
+                            <th>Transaction ID</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Payment Date</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                         <?php
@@ -66,7 +65,6 @@
                         <td><?php echo $row['msg'] ?></td>
                         <td><span class="badge bg-label-primary me-1"><?php echo $row['status'] ?></span></td>
                         <td><?php echo $row['category'] ?></td>
-                        <td><?php echo $row['doctor_assigned'] ?></td>
                       </tr>
 
                       <?php

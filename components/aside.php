@@ -108,7 +108,7 @@ if($t_users['role'] == 'I am a Patient') {
 
 <li class="menu-item">
   <a href="./transaction" class="menu-link">
-    <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+    <i class="menu-icon tf-icons bx bx-file"></i>
     <div data-i18n="Misc">Transaction History </div>
   </a>
 </li>
