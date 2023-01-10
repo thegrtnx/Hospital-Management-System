@@ -1,4 +1,4 @@
-<?php include("functions/top.php") ?>
+<?php include("servl/top.php") ?>
 <head>
 <meta charset="utf-8" />
 <meta
