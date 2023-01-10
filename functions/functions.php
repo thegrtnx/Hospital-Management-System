@@ -308,7 +308,7 @@ function mail_mailer($email, $activator, $subj, $msg) {
     
     //Set the hostname of the mail server
     //$mail->Host = 'send.smtp.mailtrap.io';
-    $mail->Host = 'mail.dotpedia.com.ng';
+    $mail->Host = 'mail.futahms.com.ng';
     
     //Use `$mail->Host = gethostbyname('smtp.gmail.com');`
     //if your network does not support SMTP over IPv6,
@@ -330,10 +330,10 @@ function mail_mailer($email, $activator, $subj, $msg) {
     $mail->SMTPAuth = true;
     
     //Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = 'hi@dotpedia.com.ng';
+    $mail->Username = 'help@futahms.com.ng';
     
     //Password to use for SMTP authentication
-    $mail->Password = 'facdf2515000bccc8c5aab8ad41136c1';
+    $mail->Password = 'xgN8MaTpPuO.';
     //$mail->Password = 'gzoqmvzofoeddple';
 
     // For most clients expecting the Priority header:
@@ -352,11 +352,11 @@ function mail_mailer($email, $activator, $subj, $msg) {
     //Note that with gmail you can only use your account address (same as `Username`)
     //or predefined aliases that you have configured within your account.
     //Do not use user-submitted addresses in here
-    $mail->setFrom('hi@dotpedia.com.ng', 'DotPedia');
+    $mail->setFrom('help@futahms.com.ng', 'FUTA HMS');
     
     //Set an alternative reply-to address
     //This is a good place to put user-submitted addresses
-    $mail->addReplyTo('hi@dotpedia.com.ng', 'DotPedia');
+    $mail->addReplyTo('help@futahms.com.ng', 'FUTA HMS');
     
     //Set who the message is to be sent to
     $mail->addAddress($email);
