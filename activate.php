@@ -59,7 +59,7 @@
 
     <?php
 
-    include('functions/init.php');
+    include('servl/init.php');
     
     if(isset($_GET['vff'])) {
 
