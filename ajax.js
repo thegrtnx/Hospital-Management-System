@@ -31,7 +31,7 @@ $(document).ready(function () {
               } else {
                 $.ajax({
                   type: "post",
-                  url: "functions/init.php",
+                  url: "servl/init.php",
                   data: {
                     fname: fname,
                     email: email,
@@ -69,7 +69,7 @@ $(document).ready(function () {
       } else {
         $.ajax({
           type: "post",
-          url: "functions/init.php",
+          url: "servl/init.php",
           data: { username: username, password: password },
             beforeSend: function() {
                     $(toastr.clear());
@@ -98,7 +98,7 @@ $(document).ready(function () {
       } else {
         $.ajax({
           type: "post",
-          url: "functions/init.php",
+          url: "servl/init.php",
           data: { aptdate: aptdate, bkmsg: bkmsg },
             beforeSend: function() {
                     $(toastr.clear());
@@ -171,7 +171,7 @@ $(document).ready(function () {
 
             $.ajax({
               type: "post",
-              url: "functions/init.php",
+              url: "servl/init.php",
               data: {tel: tel, add: add, state: state, genotype: genotype, blood: blood, gender: gender, lang: lang},
               beforeSend: function() {
                 $(toastr.clear());
