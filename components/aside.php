@@ -141,63 +141,63 @@ if(isset($_SESSION['login']) && $t_users['role'] == 'I am a Patient') {
   
   
   
-      
-<ul class="menu-inner py-1">
-<br/>
-<!-- Dashboard -->
-<li class="menu-item">
-  <a href="./" class="menu-link">
-    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-    <div data-i18n="Analytics">Dashboard</div>
-  </a>
-</li>
+          
+    <ul class="menu-inner py-1">
+    <br/>
+    <!-- Dashboard -->
+    <li class="menu-item">
+      <a href="./" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <div data-i18n="Analytics">Dashboard</div>
+      </a>
+    </li>
 
-<br/>
+    <br/>
 
-<!-- Layouts -->
-<li class="menu-item">
-  <a href="./appointment" class="menu-link">
-    <i class="menu-icon tf-icons bx bx-layout"></i>
-    <div data-i18n="Layouts">View Bookings</div>
-  </a>
+    <!-- Layouts -->
+    <li class="menu-item">
+      <a href="./appointment" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-layout"></i>
+        <div data-i18n="Layouts">View Bookings</div>
+      </a>
 
-</li>
-<br/>
+    </li>
+    <br/>
 
 
-<li class="menu-item">
-  <a href="./pharmacy" class="menu-link">
-    <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-    <div data-i18n="Misc">Upload Drugs</div>
-  </a>
-</li>
+    <li class="menu-item">
+      <a href="./pharmacy" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+        <div data-i18n="Misc">Upload Drugs</div>
+      </a>
+    </li>
 
-<br/>
+    <br/>
 
-<li class="menu-item">
-  <a href="./transaction" class="menu-link">
-    <i class="menu-icon tf-icons bx bx-file"></i>
-    <div data-i18n="Misc">Transactions</div>
-  </a>
-</li>
+    <li class="menu-item">
+      <a href="./transaction" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-file"></i>
+        <div data-i18n="Misc">Transactions</div>
+      </a>
+    </li>
 
-<br/>
+    <br/>
 
-<li class="menu-item">
-  <a href="./profile" class="menu-link">
-    <i class="menu-icon tf-icons bx bx-user"></i>
-    <div data-i18n="Misc">Profile</div>
-  </a>
-</li>
-<br/>
-<li class="menu-item">
-  <a href="./logout" class="menu-link">
-    <i class="menu-icon tf-icons bx bx-lock"></i>
-    <div data-i18n="User interface">Logout</div>
-  </a>
+    <li class="menu-item">
+      <a href="./profile" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-user"></i>
+        <div data-i18n="Misc">Profile</div>
+      </a>
+    </li>
+    <br/>
+    <li class="menu-item">
+      <a href="./logout" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-lock"></i>
+        <div data-i18n="User interface">Logout</div>
+      </a>
 
-</li>
-</ul>
+    </li>
+    </ul>
   
   
   ';
