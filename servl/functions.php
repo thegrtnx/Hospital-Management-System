@@ -130,131 +130,6 @@ function email_exist($email) {
 }
 
 
-//redirect to different roles on signup
-function role_director($username, $role) {
-
-                //redirect to user dashboard
-                if($role == 'user' || $role == 'USER') {
-                    
-                    $_SESSION['login'] = $username;
-
-                    //get ip addr
-                    $ip = get_client_ip();
-
-                    //check if user was a guest
-                    $ssl = "SELECT * FROM guest WHERE `ip` = '$ip'";
-                    $res = query($ssl);
-
-                    if(row_count($res) == 1) {
-
-                        $row = mysqli_fetch_array($res);
-                        
-                        $det = $row['det'];
-                        
-                        //if yes, redirect to the guest related page
-                        echo '<script>window.location.href ="./bookdetails?book='.$det.'"</script>';
-                        
-                        //delete guest record from database
-                        $dls = "DELETE FROM guest WHERE `ip` = '$ip'";
-                        $des = query($dls);
-                        
-                    } else {
-
-
-                    echo '<img style="width: 100px; height: 100px" src="assets/img/loading.gif">';    
-
-                    echo '<script>window.location.href ="./"</script>'; 
-                    
-                    }
-
-                
-                } else {
-
-                    //redirect to author dashbaord
-                    if($role == 'author' || $role == 'AUTHOR') {
-
-                        $_SESSION['login'] = $username;
-
-                         //get ip addr
-                        $ip = get_client_ip();
-
-                        //check if user was a guest
-                        $ssl = "SELECT * FROM guest WHERE `ip` = '$ip'";
-                        $res = query($ssl);
-
-                        if(row_count($res) == 1) {
-
-                            $row = mysqli_fetch_array($res);
-                            
-                            $det = $row['det'];
-                            
-                            //if yes, redirect to the guest related page
-                            echo '<script>window.location.href="author/./bookdetails?book='.$det.'"</script>';
-                            
-                            //delete guest record from database
-                            $dls = "DELETE FROM guest WHERE `ip` = '$ip'";
-                            $des = query($dls);
-                            
-                        } else {
-
-                        echo '<img style="width: 100px; height: 100px" src="assets/img/loading.gif">';    
-
-                        echo '<script>window.location.href ="author/./"</script>';  
-
-                        }
-
-
-                    } else {
-
-
-                        //redirect to publisher dashboard
-                        if($role == 'publisher' || $role == 'PUBLISHER') {
-
-                        $_SESSION['login'] = $username;
-
-                         //get ip addr
-                         $ip = get_client_ip();
-
-                         //check if user was a guest
-                         $ssl = "SELECT * FROM guest WHERE `ip` = '$ip'";
-                         $res = query($ssl);
- 
-                         if(row_count($res) == 1) {
- 
-                             $row = mysqli_fetch_array($res);
-                             
-                             $det = $row['det'];
-                             
-                             //if yes, redirect to the guest related page
-                             echo '<script>window.location.href="publisher/./bookdetails?book='.$det.'"</script>';
-                             
-                             //delete guest record from database
-                             $dls = "DELETE FROM guest WHERE `ip` = '$ip'";
-                             $des = query($dls);
-                             
-                         } else {
-
-                        echo '<img style="width: 100px; height: 100px" src="assets/img/loading.gif">';    
-
-                        echo '<script>window.location.href ="publisher/./"</script>';  
-
-                         } 
-
-
-                        } else {
-
-                            echo '<img style="width: 100px; height: 100px" src="assets/img/loading.gif">';    
-
-                            echo '<script>window.location.href ="./signin"</script>';
-                        }
-                    }
-
-                }
-
-
-}
-
-
 
 //get specific user details
 function user_details() {
@@ -303,8 +178,8 @@ function mail_mailer($email, $activator, $subj, $msg) {
     //SMTP::DEBUG_OFF = off (for production use)
     //SMTP::DEBUG_CLIENT = client messages
     //SMTP::DEBUG_SERVER = client and server messages
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-    //$mail->SMTPDebug  = SMTP::DEBUG_OFF;
+    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->SMTPDebug  = SMTP::DEBUG_OFF;
     
     //Set the hostname of the mail server
     //$mail->Host = 'send.smtp.mailtrap.io';
