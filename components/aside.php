@@ -68,7 +68,8 @@
 
 
 <?php  
-if($t_users['role'] == 'I am a Patient') {
+
+if(isset($_SESSION['login']) && $t_users['role'] == 'I am a Patient') {
 
 
   echo '
