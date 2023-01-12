@@ -1,3 +1,8 @@
+<?php
+
+include('servl/init.php');
+
+?>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -58,8 +63,6 @@
     <!-- Content -->
 
     <?php
-
-    include('servl/init.php');
     
     if(isset($_GET['vff'])) {
 

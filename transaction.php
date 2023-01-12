@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-
-<html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="assets/"
-  data-template="vertical-menu-template-free"
->
-<?php include("components/head.php") ?>
+<<?php include("components/head.php") ?>
   <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
