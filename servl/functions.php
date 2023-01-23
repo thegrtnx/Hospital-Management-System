@@ -254,7 +254,7 @@ function mail_mailer($email, $activator, $subj, $msg) {
 
     } else {
 
-        echo 'Mailer Error: ' . $send->ErrorInfo;
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
 
 
         return false;
