@@ -92,15 +92,13 @@
                     </div>
                     <div class="card-body">
                       <form>
- 
-                        <div class="mb-3">
-                          <label class="form-label" for="basic-default-phone">Pick an appointment date</label>
-                          <input
-                            type="date"
-                            id="aptdte"
-                            class="form-control"
-                          />
-                        </div>
+                      <div class="mb-3 col-md-12">
+                            <label for="cay" class="form-label">Select your preferred appointment</label>
+                            <select id="bkdoccategory" class="select2 form-select">
+                              <option>Physical</option>
+                              <option>Virtual (Whatsapp only)</option>
+                            </select>
+                          </div>
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-message">What's your appointment for?</label>
                           <textarea
@@ -109,6 +107,16 @@
                             placeholder="Hi, Do you have a moment to talk Joe?"
                           ></textarea>
                         </div>
+
+                        <div class="mb-3" id="bckdtt">
+                          <label class="form-label" for="basic-default-phone">Pick an appointment date</label>
+                          <input
+                            type="date"
+                            id="aptdte"
+                            class="form-control"
+                          />
+                        </div>
+                        
                         <button type="button" id="bkdoc" class="btn btn-primary">Submit</button>
                       </form>
                     </div>

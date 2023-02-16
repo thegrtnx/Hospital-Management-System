@@ -84,14 +84,33 @@ $(document).ready(function () {
   });
 
 
+    //book appountment with doctor catgory
+    $("#bkdoccategory").change(function () {
+
+      var categ = $("#bkdoccategory").val();
+  
+      if (categ == "Physical") {
+
+        $("#bckdtt").show();
+
+      } else {
+
+        $("#bckdtt").hide();
+        
+      }
+    });
+
 
   //book appountment with doctor
   $("#bkdoc").click(function () {
-    var aptdate = $("#aptdte").val();
+    var aptdat = $("#aptdte").val();
     var bkmsg = $("#bkmsg").val();
+    var cay = $("#category").val();
 
-    if (aptdate == "" || aptdate == null) {
-      $(toastr.error("Please pick a date for your appointment"));
+    if (aptdat == "" || aptdat == null) {
+
+      var aptdate = 0;
+      
     } else {
       if (bkmsg == "" || bkmsg == null) {
         $(toastr.error("State the reason for booking an appointment"));
@@ -99,7 +118,7 @@ $(document).ready(function () {
         $.ajax({
           type: "post",
           url: "servl/init.php",
-          data: { aptdate: aptdate, bkmsg: bkmsg },
+          data: { aptdate: aptdate, bkmsg: bkmsg, cay: cay},
             beforeSend: function() {
                     $(toastr.clear());
                     $("#bkdoc").html("Submitting... Please wait");
