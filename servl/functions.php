@@ -161,6 +161,20 @@ function user_details() {
 }
 
 
+//get specific user details
+function user_details_by_mail($email) {
+
+
+        //users details
+        $sql = "SELECT * FROM users WHERE `email` = '$email'";
+        $rsl = query($sql);
+    
+        $GLOBALS['bk_users'] = mysqli_fetch_array($rsl);
+    
+}
+
+
+
 
 //function for sending global default emails
 function mail_mailer($email, $activator, $subj, $msg) {
@@ -347,6 +361,27 @@ function patientbookings() {
         return false;
     }
 }
+
+
+
+//get booking type
+function patientbookingtype($ref) {
+
+    $sql = "SELECT * FROM book WHERE `bkid` = '$ref'";
+    $res = query($sql);
+    
+    if(row_count($res) == 1) {
+
+        $GLOBALS['booktype'] = mysqli_fetch_array($res);
+
+        return true;
+
+    } else {
+
+        return false;
+    }
+}
+
 
 
                                                     /****** END OF GLOBAL Functions********/

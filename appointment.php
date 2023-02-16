@@ -19,120 +19,237 @@
 
           <!-- Content wrapper -->
           <div class="content-wrapper">
-            <!-- Content -->
 
-            <div class="container-xxl flex-grow-1 container-p-y">
+           <?php
+
+              if($t_users['role'] == 'I am a Patient') {
+
+           ?>
 
 
-            <?php 
-            if(patientbookings()) {
-            
-            ?>
+                <!-- Content -->
+                <div class="container-xxl flex-grow-1 container-p-y">
 
-             <!-- Basic Bootstrap Table -->
-             <div class="card mb-5">
-                <h5 class="card-header">Your Appointment</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table mb-3">
-                    <thead>
-                      <tr>
-                        <th>Appointment ID</th>
-                        <th>Date Booked</th>
-                        <th>Reason for <br/> appointment</th>
-                        <th>Status</th>
-                        <th>Category</th>
-                        <th>Doctor Assigned</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        <?php
-                        
-                        $email = $_SESSION['login'];
 
-                        $sql = "SELECT * FROM book WHERE `email` = '$email' ORDER BY `id` Desc";
-                        $res = query($sql);
+                    <?php 
 
-                        while($row = mysqli_fetch_array($res)) {
-                        ?>
+                  
+                    if(patientbookings()) {
                     
-                      <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><?php echo $row['bkid'] ?></strong></td>
-                        <td><?php echo date('l, F d, Y', strtotime($row['date'])); ?></td>
-                        <td><?php echo $row['msg'] ?></td>
-                        <td><span class="badge bg-label-primary me-1"><?php echo $row['status'] ?></span></td>
-                        <td><?php echo $row['category'] ?></td>
-                        <td><?php echo $row['doctor_assigned'] ?></td>
-                      </tr>
+                    ?>
 
-                      <?php
-                        }
-                      ?>
-                     
-                    </tbody>
-                  </table>
-                </div>
-             </div>
-              <!--/ Basic Bootstrap Table -->
+                      <!-- Basic Bootstrap Table -->
+                      <div class="card mb-5">
+                          <h5 class="card-header">Your Appointment</h5>
+                          <div class="table-responsive text-nowrap">
+                            <table class="table mb-3">
+                              <thead>
+                                <tr>
+                                  <th>Appointment ID</th>
+                                  <th>Date Booked</th>
+                                  <th>Reason for <br/> appointment</th>
+                                  <th>Status</th>
+                                  <th>Category</th>
+                                  <th>Doctor Assigned</th>
+                                </tr>
+                              </thead>
+                              <tbody class="table-border-bottom-0">
+                                  <?php
+                                  
+                                  $email = $_SESSION['login'];
 
-              <?php 
-              
-                    } else {
+                                  $sql = "SELECT * FROM book WHERE `email` = '$email' ORDER BY `id` Desc";
+                                  $res = query($sql);
 
-                    }
-                ?>
-             
-              <!-- Basic Layout -->
-              <div class="row">
-                <div class="col-xl-12">
-                    
-                  <div class="card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-header">Book an Appointment with a Doctor</h5>
+                                  while($row = mysqli_fetch_array($res)) {
+                                  ?>
+                              
+                                <tr>
+                                  <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><?php echo $row['bkid'] ?></strong></td>
+                                  <td><?php echo date('l, F d, Y', strtotime($row['date'])); ?></td>
+                                  <td><?php echo $row['msg'] ?></td>
+                                  <td><span class="badge bg-label-primary me-1"><?php echo $row['status'] ?></span></td>
+                                  <td><?php echo $row['category'] ?></td>
+                                  <td><?php echo $row['doctor_assigned'] ?></td>
+                                </tr>
 
-                    </div>
-                    <div class="card-body">
-                      <form>
-                      <div class="mb-3 col-md-12">
-                            <label for="cay" class="form-label">Select your preferred appointment</label>
-                            <select id="bkdoccategory" class="select2 form-select">
-                              <option>Physical</option>
-                              <option>Virtual (Whatsapp only)</option>
-                            </select>
+                                <?php
+                                  }
+                                ?>
+                              
+                              </tbody>
+                            </table>
                           </div>
-                        <div class="mb-3">
-                          <label class="form-label" for="basic-default-message">What's your appointment for?</label>
-                          <textarea
-                            id="bkmsg"
-                            class="form-control"
-                            placeholder="Hi, Do you have a moment to talk Joe?"
-                          ></textarea>
-                        </div>
+                      </div>
+                        <!--/ Basic Bootstrap Table -->
 
-                        <div class="mb-3" id="bckdtt">
-                          <label class="form-label" for="basic-default-phone">Pick an appointment date</label>
-                          <input
-                            type="date"
-                            id="aptdte"
-                            class="form-control"
-                          />
-                        </div>
+                        <?php 
                         
-                        <button type="button" id="bkdoc" class="btn btn-primary">Submit</button>
-                      </form>
-                    </div>
-                  </div>
+                              } else {
+
+                              }
+                          ?>
+                      
+                        <!-- Basic Layout -->
+                        <div class="row">
+                          <div class="col-xl-12">
+                              
+                            <div class="card mb-4">
+                              <div class="card-header d-flex justify-content-between align-items-center">
+                              <h5 class="card-header">Book an Appointment with a Doctor</h5>
+
+                              </div>
+                              <div class="card-body">
+                                <form>
+                                <div class="mb-3 col-md-12">
+                                      <label for="cay" class="form-label">Select your preferred appointment</label>
+                                      <select id="bkdoccategory" class="select2 form-select">
+                                        <option>Physical</option>
+                                        <option>Virtual (Whatsapp only)</option>
+                                      </select>
+                                    </div>
+                                  <div class="mb-3">
+                                    <label class="form-label" for="basic-default-message">What's your appointment for?</label>
+                                    <textarea
+                                      id="bkmsg"
+                                      class="form-control"
+                                      placeholder="Hi, Do you have a moment to talk Joe?"
+                                    ></textarea>
+                                  </div>
+
+                                  <div class="mb-3" id="bckdtt">
+                                    <label class="form-label" for="basic-default-phone">Pick an appointment date</label>
+                                    <input
+                                      type="date"
+                                      id="aptdte"
+                                      class="form-control"
+                                    />
+                                  </div>
+                                  
+                                  <button type="button" id="bkdoc" class="btn btn-primary">Submit</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- / Content -->
+
+
+
+
+                      <!-- Footer -->
+                      <?php include("components/footer.php") ?>
+                      <!-- / Footer -->
+
+                      <div class="content-backdrop fade"></div>
                 </div>
+                <!-- Content wrapper -->
+
+          <?php
+
+              } else {
+
+                if($t_users['role'] == 'I am a Doctor') {
+
+          ?>
+
+
+          <!-- Content -->
+          <div class="container-xxl flex-grow-1 container-p-y">
+
+
+
+              <!-- Basic Bootstrap Table -->
+              <div class="card mb-5">
+                  <h5 class="card-header">Appointments</h5>
+                  <div class="table-responsive text-nowrap">
+                    <table class="table mb-3">
+                      <thead>
+                        <tr>
+                          <th>Appointment ID</th>
+                          <th>Date Booked</th>
+                          <th>Reason for <br/> appointment</th>
+                          <th>Status</th>
+                          <th>Category</th>
+                          <th>Doctor Assigned</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0">
+                          <?php
+                          
+                          $email = $_SESSION['login'];
+
+                          $sql = "SELECT * FROM book ORDER BY `id` Desc";
+                          $res = query($sql);
+
+                          while($row = mysqli_fetch_array($res)) {
+                          ?>
+                      
+                        <tr>
+                          <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><?php echo $row['bkid'] ?></strong></td>
+                          <td><?php echo date('l, F d, Y', strtotime($row['date'])); ?></td>
+                          <td><?php echo $row['msg'] ?></td>
+                          <td><span class="badge bg-label-primary me-1"><?php echo $row['status'] ?></span></td>
+                          <td><?php echo $row['category'] ?></td>
+                          <td><?php echo $row['doctor_assigned'] ?></td>
+                          <td>
+                              <div class="dropdown">
+                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                  <i class="bx bx-dots-vertical-rounded"></i>
+                              </button>
+                              <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="./approve?ref=<?php echo $row['bkid'] ?>"
+                                  ><i class="bx bx-check me-1"></i> Approve</a
+                                  >
+                                  <a class="dropdown-item" href="./reschedule?ref=<?php echo $row['bkid'] ?>"
+                                  ><i class="bx bx-recycle me-1"></i> Reschedule</a
+                                  >
+                                  <a class="dropdown-item" href="./delete?ref=<?php echo $row['bkid'] ?>"
+                                  ><i class="bx bx-trash me-1"></i> Delete</a
+                                  >
+                                  </div>
+                              </div>
+                          </td>
+                        </tr>
+
+                        <?php
+                          }
+                        ?>
+                      
+                      </tbody>
+                    </table>
+                  </div>
               </div>
-            </div>
-            <!-- / Content -->
+                <!--/ Basic Bootstrap Table -->
 
-            <!-- Footer -->
-            <?php include("components/footer.php") ?>
-            <!-- / Footer -->
+              
+               
+              </div>
+              <!-- / Content -->
 
-            <div class="content-backdrop fade"></div>
+
+
+
+              <!-- Footer -->
+              <?php include("components/footer.php") ?>
+              <!-- / Footer -->
+
+              <div class="content-backdrop fade"></div>
+
           </div>
           <!-- Content wrapper -->
+
+          <?php
+
+            } 
+          }
+
+          ?>
+
+          
+
+
         </div>
         <!-- / Layout page -->
       </div>
