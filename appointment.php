@@ -40,7 +40,7 @@
 
                       <!-- Basic Bootstrap Table -->
                       <div class="card mb-5">
-                          <h5 class="card-header">Your Appointment</h5>
+                          <h5 class="card-header">Pending Appointment</h5>
                           <div class="table-responsive text-nowrap">
                             <table class="table mb-3">
                               <thead>
@@ -58,8 +58,14 @@
                                   
                                   $email = $_SESSION['login'];
 
-                                  $sql = "SELECT * FROM book WHERE `email` = '$email' ORDER BY `id` Desc";
+                                  $sql = "SELECT * FROM book WHERE `email` = '$email' AND `status` = 'Pending Approval' ORDER BY `id` Desc";
                                   $res = query($sql);
+
+                                  if(row_count($res) == '' || row_count($res) == null) {
+
+                                    echo "No appointment yet";
+
+                                  } else {
 
                                   while($row = mysqli_fetch_array($res)) {
                                   ?>
@@ -75,6 +81,7 @@
 
                                 <?php
                                   }
+                                }
                                 ?>
                               
                               </tbody>
@@ -82,6 +89,61 @@
                           </div>
                       </div>
                         <!--/ Basic Bootstrap Table -->
+
+
+
+                         <!-- Basic Bootstrap Table -->
+                        <div class="card mb-5">
+                            <h5 class="card-header">Approved Appointments</h5>
+                            <div class="table-responsive text-nowrap">
+                              <table class="table mb-3">
+                                <thead>
+                                  <tr>
+                                    <th>Appointment ID</th>
+                                    <th>Date Booked</th>
+                                    <th>Reason for <br/> appointment</th>
+                                    <th>Status</th>
+                                    <th>Category</th>
+                                    <th>Doctor Assigned</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    <?php
+                                    
+                                    $email = $_SESSION['login'];
+
+                                    $sql = "SELECT * FROM book WHERE `email` = '$email' AND `status` = 'Approved' ORDER BY `id` Desc";
+                                    $res = query($sql);
+
+                                    if(row_count($res) == '' || row_count($res) == null) {
+
+                                      echo "No appointment yet";
+
+                                    } else {
+
+                                    while($row = mysqli_fetch_array($res)) {
+                                    ?>
+                                
+                                  <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><?php echo $row['bkid'] ?></strong></td>
+                                    <td><?php echo date('l, F d, Y', strtotime($row['date'])); ?></td>
+                                    <td><?php echo $row['msg'] ?></td>
+                                    <td><span class="badge bg-label-success me-1"><?php echo $row['status'] ?></span></td>
+                                    <td><?php echo $row['category'] ?></td>
+                                    <td><?php echo $row['doctor_assigned'] ?></td>
+                                    
+                                  </tr>
+
+                                  <?php
+                                    }
+                                  }
+                                  ?>
+                                
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
+                         <!--/ Basic Bootstrap Table -->
 
                         <?php 
                         
@@ -132,6 +194,9 @@
                             </div>
                           </div>
                         </div>
+
+
+                        
                       </div>
                       <!-- / Content -->
 
@@ -162,7 +227,7 @@
 
               <!-- Basic Bootstrap Table -->
               <div class="card mb-5">
-                  <h5 class="card-header">Appointments</h5>
+                  <h5 class="card-header">Pending Appointments</h5>
                   <div class="table-responsive text-nowrap">
                     <table class="table mb-3">
                       <thead>
@@ -180,8 +245,14 @@
                           
                           $email = $_SESSION['login'];
 
-                          $sql = "SELECT * FROM book ORDER BY `id` Desc";
+                          $sql = "SELECT * FROM book WHERE `status` = 'Pending Approval' ORDER BY `id` Desc";
                           $res = query($sql);
+
+                          if(row_count($res) == '' || row_count($res) == null) {
+
+                            echo "No appointment yet";
+
+                          } else {
 
                           while($row = mysqli_fetch_array($res)) {
                           ?>
@@ -215,6 +286,65 @@
 
                         <?php
                           }
+                        }
+                        ?>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+                <!--/ Basic Bootstrap Table -->
+
+
+                 <!-- Basic Bootstrap Table -->
+              <div class="card mb-5">
+                  <h5 class="card-header">Approved Appointments</h5>
+                  <div class="table-responsive text-nowrap">
+                    <table class="table mb-3">
+                      <thead>
+                        <tr>
+                          <th>Appointment ID</th>
+                          <th>Date Booked</th>
+                          <th>Reason for <br/> appointment</th>
+                          <th>Status</th>
+                          <th>Category</th>
+                          <th>Doctor Assigned</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0">
+                          <?php
+                          
+                          $email = $_SESSION['login'];
+
+                          user_details();
+
+                          $user = "Dr ".$t_users['fullname'];
+
+                          $sql = "SELECT * FROM book WHERE `status` = 'Approved' AND `doctor_assigned` = '$user' ORDER BY `id` Desc";
+                          $res = query($sql);
+
+                          if(row_count($res) == '' || row_count($res) == null) {
+
+                            echo "No appointment yet";
+
+                          } else {
+
+                          while($row = mysqli_fetch_array($res)) {
+                          ?>
+                      
+                        <tr>
+                          <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><?php echo $row['bkid'] ?></strong></td>
+                          <td><?php echo date('l, F d, Y', strtotime($row['date'])); ?></td>
+                          <td><?php echo $row['msg'] ?></td>
+                          <td><span class="badge bg-label-success me-1"><?php echo $row['status'] ?></span></td>
+                          <td><?php echo $row['category'] ?></td>
+                          <td><?php echo $row['doctor_assigned'] ?></td>
+                          
+                        </tr>
+
+                        <?php
+                          }
+                        }
                         ?>
                       
                       </tbody>
@@ -240,6 +370,8 @@
           </div>
           <!-- Content wrapper -->
 
+
+          
           <?php
 
             } 

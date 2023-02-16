@@ -76,7 +76,7 @@ if(isset($_GET['ref'])) {
 
 
 
-        //redirect("./appointment");
+        redirect("./appointment");
 
     } else {
 
@@ -126,7 +126,7 @@ if(isset($_GET['ref'])) {
         mail_mailer($email, $activator, $subj, $msg);
 
 
-        //redirect("https://api.whatsapp.com/send?phone=$phone_number&text=$bkmsg");
+        redirect("https://api.whatsapp.com/send?phone=$phone_number&text=$bkmsg");
 
     }
 
