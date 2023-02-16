@@ -205,10 +205,10 @@ function mail_mailer($email, $activator, $subj, $msg) {
     $mail->SMTPAuth = true;
     
     //Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = 'help@futahms.com.ng';
+    $mail->Username = 'emergency@futahms.com.ng';
     
     //Password to use for SMTP authentication
-    $mail->Password = 'xgN8MaTpPuO.';
+    $mail->Password = '=[D*wE~AIk3;';
     //$mail->Password = 'gzoqmvzofoeddple';
 
     // For most clients expecting the Priority header:
@@ -227,11 +227,11 @@ function mail_mailer($email, $activator, $subj, $msg) {
     //Note that with gmail you can only use your account address (same as `Username`)
     //or predefined aliases that you have configured within your account.
     //Do not use user-submitted addresses in here
-    $mail->setFrom('help@futahms.com.ng', 'FUTA HMS');
+    $mail->setFrom('emergency@futahms.com.ng', 'FUTA HMS');
     
     //Set an alternative reply-to address
     //This is a good place to put user-submitted addresses
-    $mail->addReplyTo('help@futahms.com.ng', 'FUTA HMS');
+    $mail->addReplyTo('emergency@futahms.com.ng', 'FUTA HMS');
     
     //Set who the message is to be sent to
     $mail->addAddress($email);
