@@ -476,9 +476,21 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 //book an appointment with doctor
 if(isset($_POST['aptdate']) && isset($_POST['bkmsg']) && isset($_POST['cay'])) {
 
-    $aptdate = clean(escape($_POST['aptdate']));
+    echo "haaa";
+
+    $aptdte = clean(escape($_POST['aptdate']));
     $bkmsg   = clean(escape($_POST['bkmsg']));
     $cay   = clean(escape($_POST['cay']));
+
+    if($aptdte == 0) {
+
+        $aptdate = date("Y-m-d");
+
+    } else {
+
+        $aptdate = $aptdte;      
+
+    }
 
 
     $bkid    = "hmsbook/".otp();

@@ -103,18 +103,24 @@ $(document).ready(function () {
 
   //book appountment with doctor
   $("#bkdoc").click(function () {
+
     var aptdat = $("#aptdte").val();
     var bkmsg = $("#bkmsg").val();
-    var cay = $("#category").val();
+    var cay = $("#bkdoccategory").val();
 
     if (aptdat == "" || aptdat == null) {
 
       var aptdate = 0;
       
     } else {
+
+      var aptdate =  aptdat;
+    }
+
       if (bkmsg == "" || bkmsg == null) {
         $(toastr.error("State the reason for booking an appointment"));
       } else {
+        $(toastr.info("Submitting... Please wait"));
         $.ajax({
           type: "post",
           url: "servl/init.php",
@@ -127,7 +133,7 @@ $(document).ready(function () {
             $(toastr.success(data));
           },
         });
-      }
+
     }
   });
 
