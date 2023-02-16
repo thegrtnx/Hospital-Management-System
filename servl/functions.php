@@ -216,7 +216,7 @@ function mail_mailer($email, $activator, $subj, $msg) {
     $mail->Priority = 1;
     // MS Outlook custom header
     // May set to "Urgent" or "Highest" rather than "High"
-    $mail->AddCustomHeader("X-MSMail-Priority: High");
+    $mail->AddCustomHeader("X-MSMail-Priority: Urgent");
     // Not sure if Priority will also set the Importance header:
     $mail->AddCustomHeader("Importance: High");
     
