@@ -58,7 +58,7 @@
                                   
                                   $email = $_SESSION['login'];
 
-                                  $sql = "SELECT * FROM book WHERE `email` = '$email' AND `status` = 'Pending Approval' ORDER BY `id` Desc";
+                                  $sql = "SELECT * FROM book WHERE `email` = '$email' AND `status` = 'Pending Approval' OR `status` = 'Rescheduled' ORDER BY `id` Desc";
                                   $res = query($sql);
 
                                   if(row_count($res) == '' || row_count($res) == null) {
@@ -245,7 +245,7 @@
                           
                           $email = $_SESSION['login'];
 
-                          $sql = "SELECT * FROM book WHERE `status` = 'Pending Approval' ORDER BY `id` Desc";
+                          $sql = "SELECT * FROM book WHERE `status` = 'Pending Approval' OR `status` = 'Rescheduled' ORDER BY `id` Desc";
                           $res = query($sql);
 
                           if(row_count($res) == '' || row_count($res) == null) {

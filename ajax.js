@@ -139,6 +139,38 @@ $(document).ready(function () {
 
 
   
+  //rescudule appountment with doctor
+  $("#newbck").click(function () {
+
+    var aptdat = $("#aptdte").val();
+    var reff = $("#reff").val();
+    var docname = $("#docname").val();
+    var dctel = $("#dctel").val();
+    
+  
+
+      if (aptdat == "" || aptdat == null) {
+        $(toastr.error("Kindly select a new date"));
+      } else {
+        $(toastr.info("Submitting... Please wait"));
+        $.ajax({
+          type: "post",
+          url: "servl/init.php",
+          data: { aptdat: aptdat, reff: reff, docname: docname, dctel: dctel},
+            beforeSend: function() {
+                    $(toastr.clear());
+                    $("#newbck").html("Submitting... Please wait");
+                 },
+          success: function (data) {
+            $(toastr.success(data));
+          },
+        });
+
+    }
+  });
+
+
+  
   //save profile details changes
   $("#updtpro").click(function () {
 
