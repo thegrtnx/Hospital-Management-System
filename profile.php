@@ -188,6 +188,17 @@
                               <option>Hausa</option>
                             </select>
                           </div>
+
+                          <div class="mb-3 col-md-12">
+                            <label for="currency" class="form-label">Tag ID</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="tagid"
+                              name="tagid"
+                             value="<?php echo $t_users['tagid'] ?>"
+                            />
+                          </div>
                         </div>
                         <div class="mt-2">
                           <button type="button" class="btn btn-primary me-2" id="updtpro">Save changes</button>

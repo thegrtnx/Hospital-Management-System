@@ -1,7 +1,7 @@
 <?php
 //creating the database to use
-$con = mysqli_connect("localhost","root","","hms");
-//$con = mysqli_connect("localhost","futahmsc_hms","ySyZt&pTy99w","futahmsc_hms");
+//$con = mysqli_connect("localhost","root","","hms");
+$con = mysqli_connect("localhost","futahmsc_hms","sS5Trb],oZ5c","futahmsc_hms");
 
 function row_count($result) {
 

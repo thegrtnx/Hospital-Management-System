@@ -219,10 +219,10 @@ function mail_mailer($email, $activator, $subj, $msg) {
     $mail->SMTPAuth = true;
     
     //Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = 'emergency@futahms.com.ng';
+    $mail->Username = 'ward@futahms.com.ng';
     
     //Password to use for SMTP authentication
-    $mail->Password = '=[D*wE~AIk3;';
+    $mail->Password = 'pTa%!fFZ&T_k';
     //$mail->Password = 'gzoqmvzofoeddple';
 
     // For most clients expecting the Priority header:
@@ -241,11 +241,11 @@ function mail_mailer($email, $activator, $subj, $msg) {
     //Note that with gmail you can only use your account address (same as `Username`)
     //or predefined aliases that you have configured within your account.
     //Do not use user-submitted addresses in here
-    $mail->setFrom('emergency@futahms.com.ng', 'FUTA HMS');
+    $mail->setFrom('ward@futahms.com.ng', 'FUTA HMS');
     
     //Set an alternative reply-to address
     //This is a good place to put user-submitted addresses
-    $mail->addReplyTo('emergency@futahms.com.ng', 'FUTA HMS');
+    $mail->addReplyTo('ward@futahms.com.ng', 'FUTA HMS');
     
     //Set who the message is to be sent to
     $mail->addAddress($email);
@@ -278,10 +278,11 @@ function mail_mailer($email, $activator, $subj, $msg) {
        
 
 //REGISTER USER
-function register($fname, $email, $pword, $catgy) {
+function register($fname, $email, $pword, $catgy, $tagid) {
 
     $fnam = escape($fname);
     $emai = escape($email);
+    $tagd = escape($tagid);
     $pwor = md5($pword);
 
     $datereg = date("Y-m-d h:i:s");
@@ -290,8 +291,8 @@ function register($fname, $email, $pword, $catgy) {
         
     $activator = md5(otp());
     
-    $sql = "INSERT INTO users(`fullname`, `email`, `password`, `role`, `date_reg`, `activator`)";
-    $sql.= " VALUES('$fnam', '$emai', '$pwor', '$catgy', '$datereg', '$activator')";
+    $sql = "INSERT INTO users(`fullname`, `email`, `password`, `role`, `date_reg`, `activator`, `tagid`)";
+    $sql.= " VALUES('$fnam', '$emai', '$pwor', '$catgy', '$datereg', '$activator', '$tagid')";
     $result = query($sql);
 
     //redirect to verify function
@@ -470,13 +471,14 @@ function rescheduler($ref, $doctor, $dctel, $aptdat) {
 
 
 //VALIDATE USER REGISTRATION
-if(isset($_POST['fname']) && isset($_POST['catgy']) && isset($_POST['email']) && isset($_POST['pword']) && isset($_POST['cpword'])) {
+if(isset($_POST['fname']) && isset($_POST['catgy']) && isset($_POST['email']) && isset($_POST['pword']) && isset($_POST['cpword']) && isset($_POST['tagid'])) {
 
     $fname          = clean(escape($_POST['fname']));
     $catgy           = clean(escape($_POST['catgy']));
     $email          = clean(escape($_POST['email']));
     $pword          = clean(escape($_POST['pword']));
     $cpword         = clean(escape($_POST['cpword']));
+    $tagid          = clean(escape($_POST['tagid']));
         
        
         if(email_exist($email)) {
@@ -485,7 +487,7 @@ if(isset($_POST['fname']) && isset($_POST['catgy']) && isset($_POST['email']) &&
 
         } else {
 
-                register($fname, $email, $pword, $catgy);
+                register($fname, $email, $pword, $catgy, $tagid);
                 
             }
     
@@ -618,24 +620,28 @@ if(isset($_POST['aptdate']) && isset($_POST['bkmsg']) && isset($_POST['cay'])) {
 }
 
 
-if(isset($_POST['tel']) && isset($_POST['add']) && isset($_POST['state']) && isset($_POST['genotype']) && isset($_POST['blood']) && isset($_POST['gender']) && isset($_POST['lang'])){
 
-   echo $tel        = clean(escape($_POST['tel']));
-   echo $add        = clean(escape($_POST['add']));
-   echo $state      = clean(escape($_POST['state']));
-   echo $geno       = clean(escape($_POST['genotype']));
-   echo $blood      = clean(escape($_POST['blood']));
-   echo $genders    = clean(escape($_POST['gender']));
-   echo $lang       = clean(escape($_POST['lang']));
+
+//update profile
+if(isset($_POST['tel']) && isset($_POST['add']) && isset($_POST['state']) && isset($_POST['genotype']) && isset($_POST['blood']) && isset($_POST['gender']) && isset($_POST['lang']) && isset($_POST['tagid'])){
+
+   $tel        = clean(escape($_POST['tel']));
+   $add        = clean(escape($_POST['add']));
+   $state      = clean(escape($_POST['state']));
+   $geno       = clean(escape($_POST['genotype']));
+   $blood      = clean(escape($_POST['blood']));
+   $genders    = clean(escape($_POST['gender']));
+   $lang       = clean(escape($_POST['lang']));
+   $tagid      = clean(escape($_POST['tagid']));
 
     $email = $_SESSION['login'];
 
 
-    $sql ="UPDATE users SET `tel` = '$tel', `address` = '$add', `state` = '$state', `genotype` = '$geno', `bloodgroup` = '$blood', `gender` = '$genders', `language` = '$lang' WHERE `email` = '$email'";
+    $sql ="UPDATE users SET `tel` = '$tel', `address` = '$add', `state` = '$state', `genotype` = '$geno', `bloodgroup` = '$blood', `gender` = '$genders', `language` = '$lang', `tagid` = '$tagid' WHERE `email` = '$email'";
     $res = query($sql);
 
     echo "Almost complete...";
-    echo '<script>window.location.href ="./"</script>';
+    echo '<script>window.location.href ="./profile"</script>';
 
 
 }

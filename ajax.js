@@ -12,6 +12,7 @@ $(document).ready(function () {
     var catgy = $("#catgy").val();
     var pword = $("#pword").val();
     var cpword = $("#cpword").val();
+    var tagid  = $("#tagid").val();
     
 
     if (fname == "" || fname == null) {
@@ -37,7 +38,8 @@ $(document).ready(function () {
                     email: email,
                     pword: pword,
                     cpword: cpword,
-                    catgy, catgy,
+                    catgy: catgy,
+                    tagid: tagid,
                   },
                   beforeSend: function() {
                     $(toastr.clear());
@@ -181,6 +183,7 @@ $(document).ready(function () {
     var blood = $("#blood").val();
     var gender = $("#gender").val();
     var lang = $("#lang").val();
+    var tagid = $('#tagid').val();
 
     if(tel == null || tel == '') {
 
@@ -229,7 +232,7 @@ $(document).ready(function () {
             $.ajax({
               type: "post",
               url: "servl/init.php",
-              data: {tel: tel, add: add, state: state, genotype: genotype, blood: blood, gender: gender, lang: lang},
+              data: {tel: tel, add: add, state: state, genotype: genotype, blood: blood, gender: gender, lang: lang, tagid: tagid},
               beforeSend: function() {
                 $(toastr.clear());
                 $("#updtpro").html("Submitting... Please wait");
